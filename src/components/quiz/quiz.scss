@@ -12,28 +12,38 @@ body {
 
 .question {
     margin-left: -1px;
-    font-weight: bold;
+
+    label {
+        font-weight: bold;
+        background-color: lightcyan;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0.25rem;
+    }
+
+    .input-group-text {
+        border-top-right-radius: 0.25rem;
+    }
+    
+}
+
+.input-group-text,
+.form-control {
+    border-radius: 0;
+    cursor: pointer;
+    overflow-wrap: normal;
+    height: auto;
+}
+
+.input-group-text {
     background-color: lightcyan;
-    border-top-right-radius: 0.25rem;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0.25rem;
 }
 
 .answers {
     
     input {
         cursor: pointer;
-    }
-    
-    .input-group-text,
-    .form-control {
-        border-radius: 0;
-        cursor: pointer;
-    }
-
-    .input-group-text {
-        background-color: lightcyan;
     }
 
     .form-control {
