@@ -12,7 +12,10 @@ class Quiz extends Component {
         userAnswers: {
             
         },
+        missingAnswerMsg: "",
         score: 0,
+        maxScore: 2,
+        submited: false,
     }
 
     componentDidMount = () => {
@@ -51,14 +54,53 @@ class Quiz extends Component {
         }
     }
 
+    handleSubmit = e => {
+        e.preventDefault()
+        const { userAnswers, questions } = this.state
+
+        // Check if all questions are answered 
+        if (Object.values(userAnswers).find(answers => answers.length === 0)) {
+            // All questions not answered
+            this.setState({missingAnswerMsg: "You need to answer all questions before submitting the quiz"})
+        } else {
+            // All questions answered
+            let maxPoints = 0;
+            let finalScore = 0;
+            
+            questions.forEach((question, index) => {
+                // Calc max points for question and save it to overal max
+                const questionMaxPoints = question.correctAnswers.length * question.pointsPerAnswer
+                maxPoints += questionMaxPoints
+
+                // Calc questions score based on how many points each answer is worth
+                let questionScore = userAnswers[index].reduce((score, answer) => {
+                    return question.correctAnswers.indexOf(answer) >= 0 ? 
+                        score += question.pointsPerAnswer : 
+                        score -= question.pointsPerAnswer
+                }, 0)
+
+                // set question score to 0 if below and assign it to overall score
+                if(questionScore < 0)  questionScore = 0 
+                finalScore += questionScore
+            })
+
+            this.setState({
+                submited: true,
+                missingAnswerMsg: "",
+                maxScore: maxPoints,
+                score: finalScore,
+            })
+        }
+    }
+
     render() {
-        const { questions, title } = this.state
+        const { questions, title, missingAnswerMsg, score, maxScore, submited } = this.state
         return (
             <div className="container text-center">
                 {title ? (
                     <>
                         <h1 className="my-4 font-weight-bold">{title.toUpperCase()}</h1>
-                        <form>
+                        <form onSubmit={this.handleSubmit}>
                             {questions.map((question, index) => 
                                 <Question 
                                     key={index} 
@@ -67,6 +109,13 @@ class Quiz extends Component {
                                     onChange={e => this.handleChange(index, e)}
                                 />
                             )}
+                            { missingAnswerMsg && 
+                                <div className="alert alert-warning" role="alert">{missingAnswerMsg}</div> 
+                            }
+                            { submited > 0 &&
+                                <div className="alert alert-info" role="alert">You scored {score}/{maxScore}</div>
+                            }
+                            <button type="submit" className="btn btn-outline-primary">Submit</button>
                         </form> 
                     </>
                     ):
