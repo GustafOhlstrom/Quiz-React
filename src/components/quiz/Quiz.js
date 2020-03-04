@@ -20,6 +20,7 @@ class Quiz extends Component {
 
     componentDidMount = () => {
         // Get key from router
+        // this.props.match.params.quiz_id
         db.collection('quizes').doc('LMJT8GjDyaswmAv2CxFq').get()
             .then(snapshot => {
                 // Create emtpy userAnswers object using the index as key
@@ -57,6 +58,9 @@ class Quiz extends Component {
     handleSubmit = e => {
         e.preventDefault()
         const { userAnswers, questions } = this.state
+
+        // Stop form interactions after submit
+        Array.from(e.target.elements).forEach(ele => ele.setAttribute("disabled", "disabled"))
 
         // Check if all questions are answered 
         if (Object.values(userAnswers).find(answers => answers.length === 0)) {

@@ -11,8 +11,6 @@ body {
 }
 
 .question {
-    margin-left: -1px;
-
     label {
         font-weight: bold;
         background-color: lightcyan;
@@ -51,7 +49,7 @@ body {
     }
 
     .answer {
-        margin: -1px;
+        margin-top: -1px;
     }
 
     .answer:last-child {

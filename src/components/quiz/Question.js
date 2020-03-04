@@ -7,10 +7,10 @@ function Question(props) {
     const maxPoints = correctAnswers.length * pointsPerAnswer
     return (
         <div className="mb-5">
-            <div class="question input-group">
+            <div className="question input-group">
                 <label className="form-control mb-0">{question}</label>
-                <div class="input-group-append">
-                    <span class="input-group-text">{maxPoints}</span>
+                <div className="input-group-append">
+                    <span className="input-group-text">{maxPoints}</span>
                 </div>
             </div>
             <div className="answers">
