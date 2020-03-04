@@ -22,9 +22,14 @@ body {
 
 .answers {
     
+    input {
+        cursor: pointer;
+    }
+    
     .input-group-text,
     .form-control {
         border-radius: 0;
+        cursor: pointer;
     }
 
     .input-group-text {
