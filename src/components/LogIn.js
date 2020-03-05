@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "../../config/fbConfig";
+import { auth } from "../config/fbConfig";
 
 class LogIn extends React.Component {
   state = {

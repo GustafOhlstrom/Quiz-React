@@ -1,22 +1,12 @@
-<<<<<<< HEAD
-import React from 'react';
-// import Home from './components/Home'
-import Quiz from './components/quiz/Quiz'
-
-function App() {
-	return (
-		<div className="App">
-			<Quiz />
-		</div>
-	);
-=======
 import React from "react";
-import Home from "./components/Home";
-import LogIn from "./components/Login and signup/LogIn";
-import SignUp from "./components/Login and signup/SignUp";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
 import { auth } from "./config/fbConfig";
+
+import Navbar from "./components/navbar/Navbar";
+import LogIn from "./components/LogIn";
+import SignUp from "./components/SignUp";
+import Home from "./components/Home";
+import Quiz from "./components/quiz/Quiz"
 
 class App extends React.Component {
   state = {
@@ -58,6 +48,7 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/Quiz" component={Quiz} />
             <Route path="/LogIn" component={LogIn} />
             <Route path="/SignUp" component={SignUp} />
           </Switch>
@@ -65,7 +56,6 @@ class App extends React.Component {
       </BrowserRouter>
     );
   }
->>>>>>> c53a5c5880949fb5d8d1e2eb048ed4ec5177ceeb
 }
 
 export default App;

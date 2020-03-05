@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import './quiz.scss'
 import React, { Component } from 'react'
-import db from '../../config/fbConfig'
+import { db } from '../../config/fbConfig'
 import Question from './Question'
 
 class Quiz extends Component {

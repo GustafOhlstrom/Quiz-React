@@ -3,7 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 // Your web app's Firebase configuration
-var config = {
+const config = {
   apiKey: "AIzaSyCOcIwkJn1_5u6ESKQYEvanoMVkU7DCiFA",
   authDomain: "react-quiz-37929.firebaseapp.com",
   databaseURL: "https://react-quiz-37929.firebaseio.com",
@@ -15,6 +15,6 @@ var config = {
 };
 firebase.initializeApp(config);
 const auth = firebase.auth();
-const db = firebase.firestore;
+const db  = firebase.firestore();
 
 export { db, auth };
