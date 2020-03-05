@@ -1,3 +1,5 @@
+import "bootstrap/dist/css/bootstrap.css";
+import "./navbar.scss";
 import React from "react";
 import { Link } from "react-router-dom";
 import SignInHere from "./SignInHere";
@@ -6,9 +8,9 @@ import SignOutHere from "./SignOutHere";
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">
+      <Link to="/" className="logohere">
         Quiz master
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -25,24 +27,19 @@ const Navbar = () => {
           <li className="nav-item active">
             <SignOutHere />
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#"></a>
-          </li>
+          <li className="nav-item"></li>
           <li className="nav-item">
             <SignInHere />
           </li>
-          <Link to="/" className="rounded">
-            IM
-          </Link>
         </ul>
       </div>
     </nav>
   );
 };
 
-const mapThisState = state => {
-  console.log(state);
-  return {};
-};
+// const mapThisState = state => {
+//   console.log(state);
+//   return {};
+// };
 
 export default Navbar;

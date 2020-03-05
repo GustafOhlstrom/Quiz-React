@@ -1,0 +1,64 @@
+.container {
+  max-width: 800px;
+}
+
+.form-control {
+  border: none;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  justify-content: right;
+  margin-right: 4rem;
+}
+
+.navbar-brand {
+  margin-left: 2rem;
+}
+
+a .rounded {
+  display: auto;
+}
+
+a:hover {
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.nav-link {
+  margin-top: 0.3rem;
+}
+
+.link-nav {
+  text-decoration: none;
+  color: black;
+  margin-right: 2rem;
+  margin-top: 4rem;
+}
+
+ul {
+  margin-top: 0.8rem;
+}
+
+li {
+  list-style: none;
+}
+
+a:hover {
+  color: black;
+}
+
+.logohere {
+  color: black;
+  margin-left: 4rem;
+  font-size: 1.4rem;
+}
+
+.logohere:hover {
+  color: black;
+}
+
+.loggedin-andout {
+  margin-left: 4rem;
+  margin-top: 1rem;
+  color: black;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "../../config/fbConfig";
 
 class LogIn extends React.Component {
   state = {
@@ -17,9 +18,24 @@ class LogIn extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     console.log(this.state);
+
+    const { email, password } = this.state;
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(credentials => {
+        console.log("Succesful!", credentials);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        // Make a error message that displays here!
+        console.log("Failed!!!", err);
+      });
   };
 
   render() {
+    console.log(this.props);
+
     return (
       <div className="container my-5">
         <form onSubmit={this.onSubmit} className="white">

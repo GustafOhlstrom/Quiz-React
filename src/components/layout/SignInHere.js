@@ -1,7 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { auth } from "../../config/fbConfig";
 
-const SignInHere = () => {
+const SignInHere = props => {
+  const SignHere = () => {
+    auth.signOut().then(() => {
+      console.log("Signed out");
+    });
+  };
+
   return (
     <ul className="right-now d-flex">
       <li>
@@ -11,7 +18,9 @@ const SignInHere = () => {
       </li>
       <li>
         <NavLink className="link-nav" to="/">
-          Log out
+          <span className="link-nav" onClick={SignHere}>
+            Log out
+          </span>
         </NavLink>
       </li>
     </ul>
