@@ -25,12 +25,12 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item mt-3">
-              <NavLink className="link-nav" to="/">
-                Home
-              </NavLink>
+            <NavLink className="nav-link2" to="/">
+              Home
+            </NavLink>
           </li>
-          <li className="nav-item  mt-3">
-            <NavLink className="link-nav" to="/Quiz">
+          <li className="nav-item mt-3">
+            <NavLink className="nav-link2" to="/Quiz">
               Quiz
             </NavLink>
           </li>
@@ -46,9 +46,12 @@ const Navbar = () => {
   );
 };
 
-// const mapThisState = state => {
-//   console.log(state);
-//   return {};
-// };
+//  {
+//    user ? (
+//      <button onClick={signOut}>Sign out</button>
+//    ) : (
+//      <button onClick={signInWithGoogle}>Sign in with Google</button>
+//    );
+//  }
 
 export default Navbar;

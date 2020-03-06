@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "../config/fbConfig";
 
 class SignUp extends React.Component {
   state = {
@@ -17,6 +18,19 @@ class SignUp extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     console.log(this.state);
+
+    const { email, password } = this.state;
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(credentials => {
+        console.log("Succesful!", credentials);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        // Make a error message that displays here!
+        console.log("Failed!!!", err);
+      });
   };
 
   render() {
