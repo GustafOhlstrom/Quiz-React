@@ -121,11 +121,11 @@ class Quiz extends Component {
     render() {
         const { questions, title, missingAnswerMsg, score, maxScore, submited } = this.state
         return (
-            <div className="container text-center">
+            <div className="quiz container text-center">
                 {title ? (
                     <>
                         <h1 className="my-4 font-weight-bold">{title.toUpperCase()}</h1>
-                        <form onSubmit={this.handleSubmit}>
+                        <form onSubmit={this.handleSubmit} className="mb-5">
                             {questions.map((question, index) => 
                                 <Question 
                                     key={index} 

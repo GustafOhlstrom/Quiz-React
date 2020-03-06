@@ -7,6 +7,7 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Quiz from "./components/quiz/Quiz"
+import CreateQuiz from "./components/createQuiz/CreateQuiz"
 
 class App extends React.Component {
   state = {
@@ -49,6 +50,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/Quiz" component={Quiz} />
+            <Route path="/CreateQuiz" component={CreateQuiz} />
             <Route path="/LogIn" component={LogIn} />
             <Route path="/SignUp" component={SignUp} />
           </Switch>

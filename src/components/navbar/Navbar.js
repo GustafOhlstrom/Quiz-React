@@ -30,8 +30,8 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li className="nav-item mt-3">
-            <NavLink className="nav-link2" to="/Quiz">
-              Quiz
+            <NavLink className="nav-link2" to="/CreateQuiz">
+              Create a Quiz
             </NavLink>
           </li>
           <li className="nav-item  mt-3">

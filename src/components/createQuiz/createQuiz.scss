@@ -1,0 +1,40 @@
+
+#createQuiz {
+
+    .input-group-prepend .input-group-text {
+        background-color: rgb(181, 227, 253);
+    }
+
+    .input-group-append {
+        border: none;
+        cursor: pointer;
+
+        .input-group-text {
+            background-color: white;
+            border-color: white;
+        }
+
+        .add-icon {
+            min-width: 40px;
+            color: rgb(3, 192, 3);
+        }
+
+        .remove-icon {
+            min-width: 40px;
+            color: rgb(252, 0, 0);
+        }
+
+    }
+
+    .custom-control-label::before {
+        border: 1px solid rgb(35, 67, 78);
+    }
+
+    .custom-control-input:not(:checked) ~.custom-control-label::before {
+        background-color: lightblue;
+    }
+    
+    .custom-control-label::after {
+        cursor: pointer;
+    }
+}
