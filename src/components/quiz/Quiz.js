@@ -9,9 +9,7 @@ class Quiz extends Component {
         id: "",
         questions: [],
         title: "",
-        userAnswers: {
-            
-        },
+        userAnswers: {},
         missingAnswerMsg: "",
         score: 0,
         maxScore: 2,
@@ -23,12 +21,35 @@ class Quiz extends Component {
         // this.props.match.params.quiz_id
         db.collection('quizes').doc('LMJT8GjDyaswmAv2CxFq').get()
             .then(snapshot => {
+                
                 // Create emtpy userAnswers object using the index as key
                 const baseUserAnswers = {}
                 snapshot.data().questions.forEach((question,index) => baseUserAnswers[index] = [])
 
+                // Randomize answers 
+                let questions = snapshot.data().questions
+                questions.forEach(question => {
+                    // console.log(question)
+                    let spotsToFill = question.answers.length
+                    let temp
+                    let index
+
+                    // While there are spots to fill with a random element
+                    while (spotsToFill > 0) {
+                        // Pick a random index from unfilled spots
+                        index = Math.floor(Math.random() * spotsToFill)
+                        // Decrease spotsToFill by 1
+                        spotsToFill--
+                        // Swap the last element with it
+                        temp = question.answers[spotsToFill]
+                        question.answers[spotsToFill] = question.answers[index]
+                        question.answers[index] = temp
+                    }
+                })
+
                 this.setState({
-                    ...snapshot.data(), 
+                    questions: questions,
+                    title: snapshot.data().title, 
                     id: snapshot.id,
                     userAnswers: baseUserAnswers
                 })
@@ -122,8 +143,11 @@ class Quiz extends Component {
                             <button type="submit" className="btn btn-outline-primary">Submit</button>
                         </form> 
                     </>
-                    ):
-                    <p className="my-4">Loading...</p>
+                    ): (
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    )
                 }
             </div>
         )
