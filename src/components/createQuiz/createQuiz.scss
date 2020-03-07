@@ -26,6 +26,11 @@
 
     }
 
+    .question-icons.input-group-append .remove-icon {
+        min-width: 20px;
+        padding-right: 0;
+    }
+
     .custom-control-label::before {
         border: 1px solid rgb(35, 67, 78);
     }

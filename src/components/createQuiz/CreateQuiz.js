@@ -7,6 +7,12 @@ class CreateQuiz extends Component {
     state = {
         title: "",
         questions: [
+            {
+                question: "",
+                answers: ["",""],
+                correctAnswers: [],
+                pointsPerAnswer: 1
+            }
         ],
     }
 
@@ -51,6 +57,15 @@ class CreateQuiz extends Component {
         }
     }
 
+    handleRemoveQuestionClick = questionIndex => {
+        console.log(questionIndex)
+        this.setState(state =>  {
+            let questions = [...state.questions]
+            questions.splice(questionIndex, 1);
+            return { questions: questions }
+        })
+    }
+
     handleNewAnswerClick = questionIndex => {
         this.setState(state =>  {
             let questions = [...state.questions]
@@ -59,13 +74,16 @@ class CreateQuiz extends Component {
         })
     }
 
-    handleRemoveAnswerClick = (questionIndex, answerIndex) => {
+    handleRemoveAnswerClick = (questionIndex, answerIndex, answer) => {
         // Check if more than two answers exists
         if(this.state.questions[questionIndex].answers.length > 2) {
             console.log("More than two answers exists, go ahead and remove")
             this.setState(state =>  {
                 let questions = [...state.questions]
+                 // remove answer
                 questions[questionIndex].answers.splice(answerIndex, 1);
+                // if saved as correctAnswer remove it aswell
+                questions[questionIndex].correctAnswers = questions[questionIndex].correctAnswers.filter(item => item !== answer)
                 return { questions: questions }
             })
         } else {
@@ -134,10 +152,11 @@ class CreateQuiz extends Component {
                         question={question} 
                         index={index}
                         onQuestionChange={this.handleQuestionChange}
+                        onRemoveQuestionClick={index => this.handleRemoveQuestionClick(index)}
                         onNewAnswerClick={index => this.handleNewAnswerClick(index)}
                         onAnswerChange={(e, index) => this.handleAnswerChange(e, index)}
                         onCorrectAnswerChange={(e, answer, index) => this.handleCorrectAnswerChange(e, answer, index)}
-                        onRemoveAnswerClick={(index, answerIndex) => this.handleRemoveAnswerClick(index, answerIndex)}
+                        onRemoveAnswerClick={(index, answerIndex, answer) => this.handleRemoveAnswerClick(index, answerIndex, answer)}
                     />
                 )}
 

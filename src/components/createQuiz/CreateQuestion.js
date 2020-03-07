@@ -2,10 +2,11 @@ import React from 'react'
 import CreateAnswer from './CreateAnswer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function CreateQuestion(props) {
     const {question, answers } = props.question
-    const {index, onQuestionChange, onAnswerChange, onCorrectAnswerChange, onNewAnswerClick, onRemoveAnswerClick} = props
+    const {index, onQuestionChange, onAnswerChange, onCorrectAnswerChange, onNewAnswerClick, onRemoveAnswerClick, onRemoveQuestionClick} = props
     return (
         <div className="input-group mb-4">
             {/* Question */}
@@ -29,7 +30,13 @@ function CreateQuestion(props) {
                     value={question}
                     onChange={onQuestionChange}
                 />
-                <div className="input-group-append">
+                <div className="question-icons input-group-append">
+                    <div className="remove-icon input-group-text">
+                        <FontAwesomeIcon 
+                            icon={faTimes} 
+                            onClick={() => onRemoveQuestionClick(index)}
+                        />
+                    </div>
                     <div className="add-icon input-group-text">
                         <FontAwesomeIcon 
                             icon={faPlus} 
@@ -51,7 +58,7 @@ function CreateQuestion(props) {
                     answer={answer}
                     onAnswerChange={e => onAnswerChange(e, index)}
                     onCorrectAnswerChange={e => onCorrectAnswerChange(e, answer, index)}
-                    onRemoveAnswerClick={e => onRemoveAnswerClick(index, answerIndex)}
+                    onRemoveAnswerClick={e => onRemoveAnswerClick(index, answerIndex, answer)}
                 />
             )}
         </div>
