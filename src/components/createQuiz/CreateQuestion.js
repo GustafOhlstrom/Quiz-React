@@ -5,28 +5,36 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function CreateQuestion(props) {
-    const {question, answers } = props.question
-    const {index, onQuestionChange, onAnswerChange, onCorrectAnswerChange, onNewAnswerClick, onRemoveAnswerClick, onRemoveQuestionClick} = props
+    const { question, answers } = props.question
+    const {
+        questionKey, 
+        onQuestionChange, 
+        onAnswerChange, 
+        onCorrectAnswerChange, 
+        onNewAnswerClick, 
+        onRemoveAnswerClick, 
+        onRemoveQuestionClick
+    } = props
+    
     return (
-        <div className="input-group mb-4">
+        <div className="input-group mb-5">
             {/* Question */}
             <div className="input-group">
                 <div className="input-group-prepend">
                     <div className="input-group-text">
                         <label 
                             className="mb-0"
-                            htmlFor={"question" + index} 
+                            htmlFor={"question" + questionKey} 
                         >
                             Question
                         </label>
                     </div>
                 </div>
                 <input
-                    id={"question" + index}
+                    id={"question" + questionKey}
                     className="form-control"
                     placeholder="Enter question"
                     type="text"
-                    name={index}
                     value={question}
                     onChange={onQuestionChange}
                 />
@@ -34,13 +42,13 @@ function CreateQuestion(props) {
                     <div className="remove-icon input-group-text">
                         <FontAwesomeIcon 
                             icon={faTimes} 
-                            onClick={() => onRemoveQuestionClick(index)}
+                            onClick={onRemoveQuestionClick}
                         />
                     </div>
                     <div className="add-icon input-group-text">
                         <FontAwesomeIcon 
                             icon={faPlus} 
-                            onClick={() => onNewAnswerClick(index)}
+                            onClick={onNewAnswerClick}
                         />
                     </div>
                 </div>
@@ -50,17 +58,19 @@ function CreateQuestion(props) {
             </small>
 
             {/* Ansewers */}
-            {answers.map((answer, answerIndex) => 
-                <CreateAnswer 
-                    key={question + answerIndex} 
-                    question={question}
-                    index={answerIndex}
-                    answer={answer}
-                    onAnswerChange={e => onAnswerChange(e, index)}
-                    onCorrectAnswerChange={e => onCorrectAnswerChange(e, answer, index)}
-                    onRemoveAnswerClick={e => onRemoveAnswerClick(index, answerIndex, answer)}
-                />
-            )}
+            {Object.keys(answers).map(answerKey => { 
+                return (
+                    <CreateAnswer 
+                        key={answerKey} 
+                        answerKey={answerKey}
+                        answer={answers[answerKey]}
+
+                        onAnswerChange={(e, answerChecked) => onAnswerChange(e, answerChecked, answerKey)}
+                        onCorrectAnswerChange={e => onCorrectAnswerChange(e, answers[answerKey], answerKey)}
+                        onRemoveAnswerClick={() => onRemoveAnswerClick(answerKey)}
+                    />
+                )
+            })}
         </div>
     )
 }

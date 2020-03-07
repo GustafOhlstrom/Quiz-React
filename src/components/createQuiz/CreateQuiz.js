@@ -3,111 +3,121 @@ import './createQuiz.scss'
 import React, { Component } from 'react'
 import CreateQuestion from './CreateQuestion'
 
+function getId() {
+    const uniqid = require('uniqid');
+    return uniqid() 
+}
+
 class CreateQuiz extends Component {
     state = {
-        title: "",
-        questions: [
-            {
-                question: "",
-                answers: ["",""],
-                correctAnswers: [],
-                pointsPerAnswer: 1
-            }
-        ],
+        title: "Test Quiz",
+        questions: {
+            ["Q" + getId()]: {
+                question: "Test",
+                answers: {
+                    ["A" + getId()]: "a1",
+                    ["A" + getId()]: "a2"
+                },
+                correctAnswers: {},
+                pointsPerAnswer: 1,
+
+            },
+        },
     }
 
     handleTitleChange = e => this.setState({ title: e.target.value})
     
-    handleQuestionChange = e => {
-        // name stores question index
-        const { name, value } = e.target
+    // Question handlers
+
+    handleQuestionChange = (e, key) => {
+        const value = e.target.value
         this.setState(state =>  {
-            let questions = [...state.questions]
-            questions[name].question = value
+            let questions = {...state.questions}
+            questions[key].question = value
+            return { questions: questions }
+        })
+    }
+    
+    handleNewQuestionClick = () => {
+        this.setState(state =>  {
+            let questions = {...state.questions}
+            
+            // Create new empty question with unique ids
+            questions["Q" + getId()] = {
+                question: "",
+                answers: {
+                    ["A" + getId()]: "",
+                    ["A" + getId()]: ""
+                },
+                correctAnswers: {},
+                pointsPerAnswer: 1,
+
+            }
             return { questions: questions }
         })
     }
 
-    handleAnswerChange = (e, questionIndex) => {
-        // name stores answer index
-        const { name, value } = e.target
+    handleRemoveQuestionClick = key => {
         this.setState(state =>  {
-            let questions = [...state.questions]
-            questions[questionIndex].answers[name] = value
+            let questions = {...state.questions}
+            delete questions[key]
             return { questions: questions }
         })
     }
 
-    handleCorrectAnswerChange = (e, answer, questionIndex) => {
+    // Answers handlers
+
+    handleAnswerChange = (e, answerChecked, answerKey, questionKey) => {
+        console.log(answerChecked)
+        // Name stores answer index
+        const { value } = e.target
+        this.setState(state =>  {
+            let questions = {...state.questions}
+            // Update correct answer if checked as one 
+            if(answerChecked) questions[questionKey].correctAnswers[answerKey] = value
+            // Update answer value
+            questions[questionKey].answers[answerKey] = value
+            return { questions: questions }
+        })
+    }
+
+    handleNewAnswerClick = questionKey => {
+        this.setState(state =>  {
+            let questions = {...state.questions}
+            questions[questionKey].answers["A" + getId()] = ""
+            return { questions: questions }
+        })
+    }
+
+
+    handleCorrectAnswerChange = (e, answer, answerKey, questionKey) => {
         const { checked } = e.target
-        if(checked) {
-            // Add the checked answer to the correctAnswers array
-            this.setState(state =>  {
-                let questions = [...state.questions]
-                questions[questionIndex].correctAnswers.push(answer)
-                return { questions: questions }
-            })
-        } else {
-            // Remove the checked answer to the correctAnswers array
-            this.setState(state =>  {
-                let questions = [...state.questions]
-                questions[questionIndex].correctAnswers = questions[questionIndex].correctAnswers.filter(item => item !== answer)
-                return { questions: questions }
-            })
-        }
-    }
-
-    handleRemoveQuestionClick = questionIndex => {
-        console.log(questionIndex)
         this.setState(state =>  {
-            let questions = [...state.questions]
-            questions.splice(questionIndex, 1);
+            let questions = {...state.questions}
+            // Add or remove answer from correctAnswers 
+            checked ?
+                questions[questionKey].correctAnswers[answerKey] = answer :
+                delete questions[questionKey].correctAnswers[answerKey]
+
             return { questions: questions }
         })
     }
 
-    handleNewAnswerClick = questionIndex => {
-        this.setState(state =>  {
-            let questions = [...state.questions]
-            questions[questionIndex].answers.push("")
-            return { questions: questions }
-        })
-    }
-
-    handleRemoveAnswerClick = (questionIndex, answerIndex, answer) => {
+    handleRemoveAnswerClick = (answerKey, questionKey) => {
         // Check if more than two answers exists
-        if(this.state.questions[questionIndex].answers.length > 2) {
+        if(Object.keys(this.state.questions[questionKey].answers).length > 2) {
             console.log("More than two answers exists, go ahead and remove")
             this.setState(state =>  {
-                let questions = [...state.questions]
-                 // remove answer
-                questions[questionIndex].answers.splice(answerIndex, 1);
-                // if saved as correctAnswer remove it aswell
-                questions[questionIndex].correctAnswers = questions[questionIndex].correctAnswers.filter(item => item !== answer)
+                let questions = {...state.questions}
+                // remove answer and remove answer from correctAnser
+                delete questions[questionKey].answers[answerKey]
+                delete questions[questionKey].correctAnswers[answerKey]
+
                 return { questions: questions }
             })
         } else {
             alert("Each question need to contain more than two answers")
         }
-    }
-
-    handleNewQuestionClick = e => {
-        this.setState(state =>  {
-            let questions = [...state.questions]
-            questions.push(
-                {
-                    question: "",
-                    answers: [
-                        "",
-                        ""
-                    ],
-                    correctAnswers: [],
-                    pointsPerAnswer: 1,
-    
-                },
-            )
-            return { questions: questions }
-        })
     }
 
     handleSubmit = e => {
@@ -146,19 +156,27 @@ class CreateQuiz extends Component {
                     </div>
                 </div>
 
-                {questions.map((question, index) => 
-                    <CreateQuestion 
-                        key={index} 
-                        question={question} 
-                        index={index}
-                        onQuestionChange={this.handleQuestionChange}
-                        onRemoveQuestionClick={index => this.handleRemoveQuestionClick(index)}
-                        onNewAnswerClick={index => this.handleNewAnswerClick(index)}
-                        onAnswerChange={(e, index) => this.handleAnswerChange(e, index)}
-                        onCorrectAnswerChange={(e, answer, index) => this.handleCorrectAnswerChange(e, answer, index)}
-                        onRemoveAnswerClick={(index, answerIndex, answer) => this.handleRemoveAnswerClick(index, answerIndex, answer)}
-                    />
-                )}
+                {Object.keys(questions).map(questionKey => {
+                    return (
+                        <CreateQuestion 
+                            key={questionKey} 
+                            question={questions[questionKey]} 
+                            
+                            questionKey={questionKey}
+                            
+                            // Used in CreateQuestion
+                            onQuestionChange={e => this.handleQuestionChange(e, questionKey)}
+                            onRemoveQuestionClick={() => this.handleRemoveQuestionClick(questionKey)}
+                            onNewAnswerClick={() => this.handleNewAnswerClick(questionKey)}
+
+                            // Used in Create Answer
+                            onAnswerChange={(e, answerChecked, answersKey) => this.handleAnswerChange(e, answerChecked, answersKey, questionKey)}
+                            onCorrectAnswerChange={(e, answer, answersKey) => this.handleCorrectAnswerChange(e, answer, answersKey, questionKey)}
+
+                            onRemoveAnswerClick={answerIndex => this.handleRemoveAnswerClick(answerIndex, questionKey)}
+                        />
+                    )
+                })}
 
                 {/* New Question Button */}
                 <div className="form-group">
