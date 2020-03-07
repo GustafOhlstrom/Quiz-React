@@ -42,4 +42,20 @@
     .custom-control-label::after {
         cursor: pointer;
     }
+
+    .answerPoints {
+        &.input-group {
+            // width: auto;
+            justify-content: flex-end;
+        }
+
+        .form-control {
+            // display: inline-block;
+            width: auto;
+        }
+
+        &.input-group > .form-control {
+            flex: none;
+        }
+    }
 }

@@ -30,11 +30,11 @@ class CreateQuiz extends Component {
     
     // Question handlers
 
-    handleQuestionChange = (e, key) => {
+    handleQuestionChange = (e, questionKey) => {
         const value = e.target.value
         this.setState(state =>  {
             let questions = {...state.questions}
-            questions[key].question = value
+            questions[questionKey].question = value
             return { questions: questions }
         })
     }
@@ -58,10 +58,19 @@ class CreateQuiz extends Component {
         })
     }
 
-    handleRemoveQuestionClick = key => {
+    handleRemoveQuestionClick =questionKey => {
         this.setState(state =>  {
             let questions = {...state.questions}
-            delete questions[key]
+            delete questions[questionKey]
+            return { questions: questions }
+        })
+    }
+
+    handlePointsChange = (e, questionKey) => {
+        const value = e.target.value
+        this.setState(state =>  {
+            let questions = {...state.questions}
+            questions[questionKey].pointsPerAnswer = value
             return { questions: questions }
         })
     }
@@ -89,7 +98,6 @@ class CreateQuiz extends Component {
             return { questions: questions }
         })
     }
-
 
     handleCorrectAnswerChange = (e, answer, answerKey, questionKey) => {
         const { checked } = e.target
@@ -129,11 +137,10 @@ class CreateQuiz extends Component {
 
         // Check if title is empty
         if(title) {
+            let submit = true
             Object.keys(questions).forEach(questionKey => {
                 // Check if questions are empty
                 if(questions[questionKey].question) {
-                    let submit = true
-
                     // Check if answers are empty
                     Object.keys(questions[questionKey].answers).forEach(answerKey => {
                         if(!questions[questionKey].answers[answerKey]) {
@@ -148,21 +155,21 @@ class CreateQuiz extends Component {
                         alert("A correct answer needs to be selected for each question before submitting a quiz")
                     }
 
-                    // Submit quiz
-                    if(submit) {
-                        db.collection("quizes").add({...this.state})
-                            .then(alert("Quiz submited"))
-                            .catch(err => alert("Error adding quiz: ", err));
-                    }
                 } else {
                     alert("Quiz questions cannot be empty when submitting a quiz")
                     return null
                 }
             })
+
+            // Submit quiz
+            if(submit) {
+                db.collection("quizes").add({...this.state})
+                    .then(alert("Quiz submited"))
+                    .catch(err => alert("Error adding quiz: ", err));
+            }
         } else {
             alert("Quiz needs a title to be submitted")
         }
-
     }
 
     render() {
@@ -208,11 +215,11 @@ class CreateQuiz extends Component {
                             onQuestionChange={e => this.handleQuestionChange(e, questionKey)}
                             onRemoveQuestionClick={() => this.handleRemoveQuestionClick(questionKey)}
                             onNewAnswerClick={() => this.handleNewAnswerClick(questionKey)}
+                            onPointsChange={e => this.handlePointsChange(e, questionKey)}
 
                             // Used in Create Answer
                             onAnswerChange={(e, answerChecked, answersKey) => this.handleAnswerChange(e, answerChecked, answersKey, questionKey)}
                             onCorrectAnswerChange={(e, answer, answersKey) => this.handleCorrectAnswerChange(e, answer, answersKey, questionKey)}
-
                             onRemoveAnswerClick={answerIndex => this.handleRemoveAnswerClick(answerIndex, questionKey)}
                         />
                     )

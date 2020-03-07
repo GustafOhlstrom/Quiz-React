@@ -5,11 +5,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function CreateQuestion(props) {
-    const { question, answers } = props.question
+    const { question, answers, pointsPerAnswer} = props.question
     const {
         questionKey, 
         onQuestionChange, 
         onAnswerChange, 
+        onPointsChange,
         onCorrectAnswerChange, 
         onNewAnswerClick, 
         onRemoveAnswerClick, 
@@ -19,19 +20,19 @@ function CreateQuestion(props) {
     return (
         <div className="input-group mb-5">
             {/* Question */}
-            <div className="input-group">
+            <div className="input-group mb-2">
                 <div className="input-group-prepend">
                     <div className="input-group-text">
                         <label 
                             className="mb-0"
-                            htmlFor={"question" + questionKey} 
+                            htmlFor={questionKey} 
                         >
                             Question
                         </label>
                     </div>
                 </div>
                 <input
-                    id={"question" + questionKey}
+                    id={questionKey}
                     className="form-control"
                     placeholder="Enter question"
                     type="text"
@@ -52,6 +53,27 @@ function CreateQuestion(props) {
                         />
                     </div>
                 </div>
+            </div>
+            {/* Points per answer */}
+            <div className="answerPoints input-group">
+                <div className="input-group-prepend">
+                    <div className="input-group-text">
+                        <label 
+                            className="mb-0"
+                            htmlFor={"P" + questionKey} 
+                        >
+                            Points per correct answer
+                        </label>
+                    </div>
+                </div>
+                <input
+                    id={"P" + questionKey}
+                    className="form-control"
+                    placeholder="Enter question"
+                    type="number"
+                    value={pointsPerAnswer}
+                    onChange={onPointsChange}
+                />
             </div>
             <small className="form-text text-white ml-auto mb-2">
               Select correct answer(s) with checkbox

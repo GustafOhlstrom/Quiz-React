@@ -16,8 +16,8 @@ class CreateAnswer extends Component {
 
     render() {
         const { 
-            answer, 
             answerKey, 
+            answer, 
             onAnswerChange, 
             onRemoveAnswerClick
         } = this.props
@@ -43,14 +43,14 @@ class CreateAnswer extends Component {
                         <div className="input-group-text">
                             <label 
                                 className="mb-0"
-                                htmlFor={"T" + answerKey}
+                                htmlFor={answerKey}
                             >
                                 Answer
                             </label>
                         </div>
                     </div>
                     <input
-                        id={"T" + answerKey}
+                        id={answerKey}
                         className="form-control"
                         placeholder="Enter a answer"
                         type="text"
