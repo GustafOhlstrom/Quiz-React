@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './createQuiz.scss'
 import React, { Component } from 'react'
 import CreateQuestion from './CreateQuestion'
+import { db } from "../../config/fbConfig";
 
 function getId() {
     const uniqid = require('uniqid');
@@ -120,9 +121,48 @@ class CreateQuiz extends Component {
         }
     }
 
+    // Create the quiz
+
     handleSubmit = e => {
         e.preventDefault();
-        console.log("Submited:", this.state.title)
+        const { title, questions } = this.state
+
+        // Check if title is empty
+        if(title) {
+            Object.keys(questions).forEach(questionKey => {
+                // Check if questions are empty
+                if(questions[questionKey].question) {
+                    let submit = true
+
+                    // Check if answers are empty
+                    Object.keys(questions[questionKey].answers).forEach(answerKey => {
+                        if(!questions[questionKey].answers[answerKey]) {
+                            submit = false
+                            alert("Quiz answers can't be empty when submitting a quiz")
+                        }
+                    })
+
+                    // Check if atleast one correctAnswer is selected
+                    if(Object.keys(questions[questionKey].correctAnswers).length < 1) {
+                        submit = false
+                        alert("A correct answer needs to be selected for each question before submitting a quiz")
+                    }
+
+                    // Submit quiz
+                    if(submit) {
+                        db.collection("quizes").add({...this.state})
+                            .then(alert("Quiz submited"))
+                            .catch(err => alert("Error adding quiz: ", err));
+                    }
+                } else {
+                    alert("Quiz questions cannot be empty when submitting a quiz")
+                    return null
+                }
+            })
+        } else {
+            alert("Quiz needs a title to be submitted")
+        }
+
     }
 
     render() {
