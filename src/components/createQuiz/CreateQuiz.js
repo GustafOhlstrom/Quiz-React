@@ -164,7 +164,9 @@ class CreateQuiz extends Component {
             // Submit quiz
             if(submit) {
                 db.collection("quizes").add({...this.state})
-                    .then(alert("Quiz submited"))
+                    .then(doc => {
+                        this.props.history.push('/' + doc.id)
+                    })
                     .catch(err => alert("Error adding quiz: ", err));
             }
         } else {

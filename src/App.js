@@ -49,10 +49,10 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/Quiz" component={Quiz} />
             <Route path="/CreateQuiz" component={CreateQuiz} />
             <Route path="/LogIn" component={LogIn} />
             <Route path="/SignUp" component={SignUp} />
+            <Route path="/:quiz_id" component={Quiz} />
           </Switch>
         </div>
       </BrowserRouter>
