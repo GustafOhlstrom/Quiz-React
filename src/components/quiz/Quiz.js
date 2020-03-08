@@ -7,30 +7,30 @@ import Question from './Question'
 class Quiz extends Component {
     state = {
         id: "",
-        questions: [],
+        questions: {},
         title: "",
         userAnswers: {},
         missingAnswerMsg: "",
         score: 0,
-        maxScore: 2,
+        maxScore: 0,
         submited: false,
     }
 
     componentDidMount = () => {
         // Get key from router
-        // this.props.match.params.quiz_id
-        db.collection('quizes').doc('LMJT8GjDyaswmAv2CxFq').get()
+        
+        db.collection('quizes').doc(this.props.match.params.quiz_id).get()
             .then(snapshot => {
-                
                 // Create emtpy userAnswers object using the index as key
-                const baseUserAnswers = {}
-                snapshot.data().questions.forEach((question,index) => baseUserAnswers[index] = [])
+                const emptyUserAnswers = {}
+                Object.keys(snapshot.data().questions).forEach(key => emptyUserAnswers[key] = [])
 
-                // Randomize answers 
-                let questions = snapshot.data().questions
-                questions.forEach(question => {
-                    // console.log(question)
-                    let spotsToFill = question.answers.length
+                // Create array with random display order for answers
+                let questions = {...snapshot.data().questions}
+                Object.keys(questions).forEach(key => {
+                    // Create array with answer keys, to be sorted
+                    questions[key].displayOrder = [...Object.keys(questions[key].answers)]
+                    let spotsToFill = questions[key].displayOrder.length
                     let temp
                     let index
 
@@ -41,67 +41,62 @@ class Quiz extends Component {
                         // Decrease spotsToFill by 1
                         spotsToFill--
                         // Swap the last element with it
-                        temp = question.answers[spotsToFill]
-                        question.answers[spotsToFill] = question.answers[index]
-                        question.answers[index] = temp
+                        temp = questions[key].displayOrder[spotsToFill]
+                        questions[key].displayOrder[spotsToFill] = questions[key].displayOrder[index]
+                        questions[key].displayOrder[index] = temp
                     }
+
                 })
 
                 this.setState({
                     questions: questions,
                     title: snapshot.data().title, 
                     id: snapshot.id,
-                    userAnswers: baseUserAnswers
+                    userAnswers: emptyUserAnswers
                 })
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log("Could not get quiz", err))
     }
 
-    handleChange = (questionKey, e) => {
-        const { name, checked } = e.target
-        if(checked) {
-            // Add users answer to that questions answer array
-            this.setState(state => {
-                let newUserAnswers = { ...state.userAnswers }
-                newUserAnswers[questionKey] = newUserAnswers[questionKey].concat(name)
-                return { userAnswers: newUserAnswers }
-            })
-        } else {
-            // Remove users answer from that questions answer array
-            this.setState(state => {
-                let newUserAnswers = { ...state.userAnswers }
-                newUserAnswers[questionKey] = newUserAnswers[questionKey].filter(answer => answer !== name)
-                return { userAnswers: newUserAnswers }
-            })
-        }
+    handleAnswerChange = (e, questionKey) => {
+        const { id, checked } = e.target
+        this.setState(state => {
+            let newUserAnswers = { ...state.userAnswers }
+            // Add answer if check, remove if unchecked
+            checked ? 
+                newUserAnswers[questionKey] = newUserAnswers[questionKey].concat(id) :
+                newUserAnswers[questionKey] = newUserAnswers[questionKey].filter(answerKey => answerKey !== id)
+
+            return { userAnswers: newUserAnswers }
+        })
     }
 
     handleSubmit = e => {
         e.preventDefault()
         const { userAnswers, questions } = this.state
 
-        // Stop form interactions after submit
-        Array.from(e.target.elements).forEach(ele => ele.setAttribute("disabled", "disabled"))
-
         // Check if all questions are answered 
         if (Object.values(userAnswers).find(answers => answers.length === 0)) {
             // All questions not answered
             this.setState({missingAnswerMsg: "You need to answer all questions before submitting the quiz"})
         } else {
+            // Stop form interactions after submit
+            Array.from(e.target.elements).forEach(ele => ele.setAttribute("disabled", "disabled"))
+
             // All questions answered
             let maxPoints = 0;
             let finalScore = 0;
             
-            questions.forEach((question, index) => {
+            Object.keys(questions).forEach(questionKey => {
                 // Calc max points for question and save it to overal max
-                const questionMaxPoints = question.correctAnswers.length * question.pointsPerAnswer
+                const questionMaxPoints = Object.keys(questions[questionKey].correctAnswers).length * questions[questionKey].pointsPerAnswer
                 maxPoints += questionMaxPoints
-
+                
                 // Calc questions score based on how many points each answer is worth
-                let questionScore = userAnswers[index].reduce((score, answer) => {
-                    return question.correctAnswers.indexOf(answer) >= 0 ? 
-                        score += question.pointsPerAnswer : 
-                        score -= question.pointsPerAnswer
+                let questionScore = userAnswers[questionKey].reduce((score, answerKey) => {
+                    return questions[questionKey].correctAnswers[answerKey] ?
+                        score += Number(questions[questionKey].pointsPerAnswer): 
+                        score -= Number(questions[questionKey].pointsPerAnswer) 
                 }, 0)
 
                 // set question score to 0 if below and assign it to overall score
@@ -126,12 +121,12 @@ class Quiz extends Component {
                     <>
                         <h1 className="my-4 font-weight-bold">{title.toUpperCase()}</h1>
                         <form onSubmit={this.handleSubmit} className="mb-5">
-                            {questions.map((question, index) => 
+                            {Object.keys(questions).map(questionKey => 
                                 <Question 
-                                    key={index} 
-                                    questionKey={index} 
-                                    question={question} 
-                                    onChange={e => this.handleChange(index, e)}
+                                    key={questionKey} 
+                                    questionKey={questionKey} 
+                                    question={questions[questionKey]} 
+                                    onAnswerChange={e => this.handleAnswerChange(e, questionKey)}
                                 />
                             )}
                             { missingAnswerMsg && 

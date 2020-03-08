@@ -31,22 +31,19 @@ body {
     .input-group-text,
     .form-control {
         border-radius: 0;
-        cursor: pointer;
         overflow-wrap: normal;
         height: auto;
     }
 
     .input-group-text {
         background-color: lightcyan;
+        border: none;
     }
 
     .answers {
-        
-        input {
-            cursor: pointer;
-        }
 
         .form-control {
+            cursor: pointer;
             background-color:rgba(224, 255, 255, 0.25);
         }
 
