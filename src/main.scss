@@ -7,5 +7,35 @@ $body-bg: rgb(253, 133, 133);
 $body-color: #fefefe;
 
 body {
-  background-color: salmon;
+  background-color: lightseagreen;
+}
+
+.homepage {
+  border: none;
+  max-width: 70%;
+}
+
+.text-white {
+  border: none;
+}
+
+.card-title {
+  font-size: 6rem;
+  color: whitesmoke;
+  text-transform: uppercase;
+  font-family: "Roboto";
+}
+
+.card-title:hover {
+  color: whitesmoke;
+}
+
+.card-img-overlay:hover {
+  background-color: black;
+  opacity: 0.5;
+  border-radius: 3px;
+}
+
+.displayError {
+  margin-bottom: 1rem;
 }

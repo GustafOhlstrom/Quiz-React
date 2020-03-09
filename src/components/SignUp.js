@@ -5,89 +5,68 @@ class SignUp extends React.Component {
   state = {
     email: "",
     password: "",
-    firstname: "",
-    lastname: ""
+    err: ""
   };
 
-  onChange = e => {
+  handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
   };
 
-  onSubmit = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
 
     const { email, password } = this.state;
 
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(credentials => {
-        console.log("Succesful!", credentials);
+        console.log("Succesful!");
         this.props.history.push("/");
       })
       .catch(err => {
-        // Make a error message that displays here!
+        this.setState({
+          err: err.message
+        });
         console.log("Failed!!!", err);
       });
   };
 
   render() {
     return (
-      <div className="container my-5">
-        <form onSubmit={this.onSubmit} className="white">
-          <div className="form-group">
-            <label htmlFor="firstName">First name</label>
-            <input
-              onChange={this.onChange}
-              type="text"
-              className="form-control"
-              id="firstName"
-              aria-describedby="emailHelp"
-              placeholder="Firstname"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="lastName">Last name</label>
-            <input
-              onChange={this.onChange}
-              type="text"
-              className="form-control"
-              id="lastName"
-              aria-describedby="lastName"
-              placeholder="Lastname"
-            />
-          </div>
-
+      <div className="container my-5 max-auto">
+        <form onSubmit={this.handleSubmit} className="white">
+          <div className="form-group"></div>
           <div className="form-group">
             <label htmlFor="email">Email address</label>
             <input
-              onChange={this.onChange}
+              onChange={this.handleChange}
               type="email"
               className="form-control"
               id="email"
               aria-describedby="emailHelp"
               placeholder="Enter your email"
             />
-            <small id="emailHelp" className="form-text text-white">
+            <small id="emailHelp" className="form-text text-dark">
               We'll never share your email with anyone else.
             </small>
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              onChange={this.onChange}
+              onChange={this.handleChange}
               type="password"
               className="form-control"
               id="password"
               placeholder="Password"
             />
           </div>
+          <div className="displayError">
+            {this.state.err ? <div>{this.state.err}</div> : ""}
+          </div>
 
-          <button type="submit" className="btn btn-light">
+          <button type="submit" className="btn btn-dark">
             Sign Up
           </button>
         </form>
