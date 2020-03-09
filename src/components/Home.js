@@ -37,7 +37,7 @@ class Home extends React.Component {
             <div className="card-body align-items-center d-flex justify-content-center">
               <h5 className="card-title text-center">{q.title.charAt(0).toUpperCase() + q.title.slice(1)}</h5>
             </div>
-            <NavLink to="/Quiz"  className="btn btn-secondary btn-lg mb-2">
+            <NavLink to={"/" + q.id}  className="btn btn-secondary btn-lg mb-2">
             Go to quiz{" "} 
             </NavLink>
           </div>
