@@ -6,7 +6,8 @@ import Navbar from "./components/navbar/Navbar";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
-import Quiz from "./components/quiz/Quiz"
+import Quiz from "./components/quiz/Quiz";
+import CreateQuiz from "./components/createQuiz/CreateQuiz";
 
 class App extends React.Component {
   state = {
@@ -37,20 +38,14 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Navbar />
-          {this.state.user ? (
-            <p className="loggedin-andout">
-              You are logged in as: {this.state.user.email}
-            </p>
-          ) : (
-            <p className="loggedin-andout">Noone is logged in</p>
-          )}
+          <Navbar user={this.state.user} />
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/Quiz" component={Quiz} />
+            <Route path="/CreateQuiz" component={CreateQuiz} />
             <Route path="/LogIn" component={LogIn} />
             <Route path="/SignUp" component={SignUp} />
+            <Route path="/:quiz_id" component={Quiz} />
           </Switch>
         </div>
       </BrowserRouter>

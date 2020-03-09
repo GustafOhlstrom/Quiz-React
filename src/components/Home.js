@@ -1,8 +1,12 @@
 import React from "react";
 import { db } from "../config/fbConfig";
+<<<<<<< HEAD
 import { Link, NavLink } from "react-router-dom";
 import "./home.scss";
 import Quiz from "./quiz/Quiz";
+=======
+import cardImage from "../components/images/questions.jpg";
+>>>>>>> master
 
  
 class Home extends React.Component {
@@ -33,6 +37,7 @@ class Home extends React.Component {
     const cardTitle = this.state.quizes ?  
     this.state.quizes.map((q) => {
 
+<<<<<<< HEAD
   return (
     <div key={q.id} className="card col-3 "  style={{ height:"10rem", width: "15rem "}}>
       <div className="card-body align-items-center d-flex justify-content-center">
@@ -62,3 +67,21 @@ class Home extends React.Component {
 }
  
 export default Home;
+=======
+  render() {
+    const title = this.state.quizes
+      ? this.state.quizes.map((q, i) => {
+          return <li key={i}>{q.title}</li>;
+        })
+      : "hello";
+
+    return (
+      <div className="homepage mx-auto my-5">
+        <ul className="mx-auto">{title}</ul>
+      </div>
+    );
+  }
+}
+
+export default Home;
+>>>>>>> master

@@ -5,19 +5,17 @@ class LogIn extends React.Component {
   state = {
     email: "",
     password: "",
-    firstname: "",
-    lastname: ""
+    err: ""
   };
 
-  onChange = e => {
+  handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
   };
 
-  onSubmit = e => {
+  handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
 
     const { email, password } = this.state;
 
@@ -28,7 +26,9 @@ class LogIn extends React.Component {
         this.props.history.push("/");
       })
       .catch(err => {
-        // Make a error message that displays here!
+        this.setState({
+          err: err.message
+        });
         console.log("Failed!!!", err);
       });
   };
@@ -37,12 +37,12 @@ class LogIn extends React.Component {
     console.log(this.props);
 
     return (
-      <div className="container my-5">
-        <form onSubmit={this.onSubmit} className="white">
+      <div className="container my-5 mx-auto">
+        <form onSubmit={this.handleSubmit} className="white">
           <div className="form-group">
             <label htmlFor="email">Email address</label>
             <input
-              onChange={this.onChange}
+              onChange={this.handleChange}
               type="email"
               className="form-control"
               id="email"
@@ -53,11 +53,10 @@ class LogIn extends React.Component {
               We'll never share your email with anyone else.
             </small>
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
-              onChange={this.onChange}
+              onChange={this.handleChange}
               type="password"
               className="form-control"
               id="password"
@@ -65,7 +64,11 @@ class LogIn extends React.Component {
             />
           </div>
 
-          <button type="submit" className="btn btn-light">
+          <div className="displayError">
+            {this.state.err ? <div>{this.state.err}</div> : ""}
+          </div>
+
+          <button type="submit" className="btn btn-dark">
             Log In
           </button>
         </form>
