@@ -179,108 +179,113 @@ class CreateQuiz extends Component {
   render() {
     const { title, questions } = this.state;
     return (
-      <div id="createQuiz">
-        <div className="quiz-title mx-auto my-5 container">
-          <div className="card bg-light text-white text-center">
-            <img
-              className="card-img"
-              src={cardImage}
-              style={{
-                maxHeight: "200px",
-                maxWidth: "100%",
-                objectFit: "cover"
-              }}
-              alt="Questionmark of question"
-            />
+        !this.props.user ?  
+            (<div className="container alert alert-secondary mt-5 text-center" role="alert">
+                You need to be logged in to create a quiz
+            </div>) : 
+            (<div id="createQuiz">
+                <div className="quiz-title mx-auto my-5 container">
+                <div className="card bg-light text-white text-center">
+                    <img
+                    className="card-img"
+                    src={cardImage}
+                    style={{
+                        maxHeight: "200px",
+                        maxWidth: "100%",
+                        objectFit: "cover"
+                    }}
+                    alt="Questionmark of question"
+                    />
 
-            <div className="card-img-overlay align-items-center d-flex justify-content-center">
-              <h1 className="card-title">Create quiz</h1>
-            </div>
-          </div>
-        </div>
-        <form onSubmit={this.handleSubmit} className="container mb-5">
-          {/* Quiz Title */}
-          <div className="input-group mb-5">
-            <div className="input-group mb-2">
-              <div className="input-group-prepend">
-                <div className="input-group-text">
-                  <label className="mb-0" htmlFor="title">
-                    Quiz Title
-                  </label>
+                    <div className="card-img-overlay align-items-center d-flex justify-content-center">
+                    <h1 className="card-title">Create quiz</h1>
+                    </div>
                 </div>
-              </div>
-              <input
-                id="title"
-                className="form-control"
-                placeholder="Enter quiz title"
-                type="text"
-                value={title}
-                onChange={this.handleTitleChange}
-              />
+                </div>
+                <form onSubmit={this.handleSubmit} className="container mb-5">
+                {/* Quiz Title */}
+                <div className="input-group mb-5">
+                    <div className="input-group mb-2">
+                    <div className="input-group-prepend">
+                        <div className="input-group-text">
+                        <label className="mb-0" htmlFor="title">
+                            Quiz Title
+                        </label>
+                        </div>
+                    </div>
+                    <input
+                        id="title"
+                        className="form-control"
+                        placeholder="Enter quiz title"
+                        type="text"
+                        value={title}
+                        onChange={this.handleTitleChange}
+                    />
+                    </div>
+                </div>
+
+                {Object.keys(questions).map(questionKey => {
+                    return (
+                    <CreateQuestion
+                        key={questionKey}
+                        question={questions[questionKey]}
+                        questionKey={questionKey}
+                        // Used in CreateQuestion
+                        onQuestionChange={e =>
+                        this.handleQuestionChange(e, questionKey)
+                        }
+                        onRemoveQuestionClick={() =>
+                        this.handleRemoveQuestionClick(questionKey)
+                        }
+                        onNewAnswerClick={() => this.handleNewAnswerClick(questionKey)}
+                        onPointsChange={e => this.handlePointsChange(e, questionKey)}
+                        // Used in Create Answer
+                        onAnswerChange={(e, answerChecked, answersKey) =>
+                        this.handleAnswerChange(
+                            e,
+                            answerChecked,
+                            answersKey,
+                            questionKey
+                        )
+                        }
+                        onCorrectAnswerChange={(e, answer, answersKey) =>
+                        this.handleCorrectAnswerChange(
+                            e,
+                            answer,
+                            answersKey,
+                            questionKey
+                        )
+                        }
+                        onRemoveAnswerClick={answerIndex =>
+                        this.handleRemoveAnswerClick(answerIndex, questionKey)
+                        }
+                    />
+                    );
+                })}
+
+                {/* New Question Button */}
+                <div className="form-group">
+                    <button
+                    className="btn btn-light d-block ml-auto"
+                    type="button"
+                    onClick={this.handleNewQuestionClick}
+                    >
+                    Add Question
+                    </button>
+                </div>
+
+                {/* From Submit Button */}
+                <div className="form-group">
+                    <button
+                    className="btn btn-light d-block mx-auto mt-5"
+                    type="submit"
+                    >
+                    Submit Quiz
+                    </button>
+                </div>
+                </form>
             </div>
-          </div>
-
-          {Object.keys(questions).map(questionKey => {
-            return (
-              <CreateQuestion
-                key={questionKey}
-                question={questions[questionKey]}
-                questionKey={questionKey}
-                // Used in CreateQuestion
-                onQuestionChange={e =>
-                  this.handleQuestionChange(e, questionKey)
-                }
-                onRemoveQuestionClick={() =>
-                  this.handleRemoveQuestionClick(questionKey)
-                }
-                onNewAnswerClick={() => this.handleNewAnswerClick(questionKey)}
-                onPointsChange={e => this.handlePointsChange(e, questionKey)}
-                // Used in Create Answer
-                onAnswerChange={(e, answerChecked, answersKey) =>
-                  this.handleAnswerChange(
-                    e,
-                    answerChecked,
-                    answersKey,
-                    questionKey
-                  )
-                }
-                onCorrectAnswerChange={(e, answer, answersKey) =>
-                  this.handleCorrectAnswerChange(
-                    e,
-                    answer,
-                    answersKey,
-                    questionKey
-                  )
-                }
-                onRemoveAnswerClick={answerIndex =>
-                  this.handleRemoveAnswerClick(answerIndex, questionKey)
-                }
-              />
-            );
-          })}
-
-          {/* New Question Button */}
-          <div className="form-group">
-            <button
-              className="btn btn-light d-block ml-auto"
-              type="button"
-              onClick={this.handleNewQuestionClick}
-            >
-              Add Question
-            </button>
-          </div>
-
-          {/* From Submit Button */}
-          <div className="form-group">
-            <button
-              className="btn btn-light d-block mx-auto mt-5"
-              type="submit"
-            >
-              Submit Quiz
-            </button>
-          </div>
-        </form>
-      </div>
+            )
     );
   }
 }
