@@ -1,0 +1,27 @@
+@import"~bootstrap/scss/bootstrap";
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+  .list-group-item{
+    display: auto;
+    text-align: center;
+  }
+
+  .list-group{
+    display: auto;
+    text-align: center;
+    font-size: 40px;
+    text-transform: uppercase;
+    padding: 10px;
+    margin-top:10rem; 
+    margin-bottom:2rem;
+
+  }
+
+  li{
+    text-align: center;
+  
+  }
