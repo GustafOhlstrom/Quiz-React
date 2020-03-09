@@ -6,8 +6,13 @@ import Navbar from "./components/navbar/Navbar";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
+<<<<<<< HEAD
 import Quiz from "./components/quiz/Quiz";
 import CreateQuiz from "./components/CreateQuiz";
+=======
+import Quiz from "./components/quiz/Quiz"
+import CreateQuiz from "./components/createQuiz/CreateQuiz"
+>>>>>>> 4794c51fb28ef8041fec74fee3d2dd9a251f7506
 
 class App extends React.Component {
   state = {
@@ -42,10 +47,14 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/Quiz" component={Quiz} />
+            <Route path="/CreateQuiz" component={CreateQuiz} />
             <Route path="/LogIn" component={LogIn} />
             <Route path="/SignUp" component={SignUp} />
+<<<<<<< HEAD
             <Route path="/CreateQuiz" component={CreateQuiz} />
+=======
+            <Route path="/:quiz_id" component={Quiz} />
+>>>>>>> 4794c51fb28ef8041fec74fee3d2dd9a251f7506
           </Switch>
         </div>
       </BrowserRouter>

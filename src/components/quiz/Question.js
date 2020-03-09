@@ -2,9 +2,9 @@ import React from 'react'
 import Answers from './Answers'
 
 function Question(props) {
-    const { answers, question, correctAnswers, pointsPerAnswer } = props.question
-    const { questionKey, onChange } = props
-    const maxPoints = correctAnswers.length * pointsPerAnswer
+    const { answers, question, correctAnswers, pointsPerAnswer, displayOrder } = props.question
+    const { onAnswerChange } = props
+    const maxPoints = Object.keys(correctAnswers).length * pointsPerAnswer
     return (
         <div className="mb-5">
             <div className="question input-group">
@@ -14,12 +14,12 @@ function Question(props) {
                 </div>
             </div>
             <div className="answers">
-                {answers.map((answer,index) => 
+                {displayOrder.map(answerKey => 
                     <Answers 
-                        key={index} 
-                        questionKey={questionKey}
-                        answer={answer}
-                        onChange={onChange}
+                        key={answerKey} 
+                        answerKey={answerKey}
+                        answer={answers[answerKey]}
+                        onAnswerChange={onAnswerChange}
                     />
                 )}
             </div>
