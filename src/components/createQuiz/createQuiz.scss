@@ -1,61 +1,81 @@
-
 #createQuiz {
+  .input-group-prepend .input-group-text {
+    background-color: rgb(181, 227, 253);
+  }
 
-    .input-group-prepend .input-group-text {
-        background-color: rgb(181, 227, 253);
+  .input-group-append {
+    border: none;
+    cursor: pointer;
+
+    .input-group-text {
+      background-color: white;
+      border-color: white;
     }
 
-    .input-group-append {
-        border: none;
-        cursor: pointer;
-
-        .input-group-text {
-            background-color: white;
-            border-color: white;
-        }
-
-        .add-icon {
-            min-width: 40px;
-            color: rgb(3, 192, 3);
-        }
-
-        .remove-icon {
-            min-width: 40px;
-            color: rgb(252, 0, 0);
-        }
-
+    .add-icon {
+      min-width: 40px;
+      color: rgb(3, 192, 3);
     }
 
-    .question-icons.input-group-append .remove-icon {
-        min-width: 20px;
-        padding-right: 0;
+    .remove-icon {
+      min-width: 40px;
+      color: rgb(252, 0, 0);
+    }
+  }
+
+  .question-icons.input-group-append .remove-icon {
+    min-width: 20px;
+    padding-right: 0;
+  }
+
+  .custom-control-label::before {
+    border: 1px solid rgb(35, 67, 78);
+  }
+
+  .custom-control-input:not(:checked) ~ .custom-control-label::before {
+    background-color: lightblue;
+  }
+
+  .custom-control-label::after {
+    cursor: pointer;
+  }
+
+  .answerPoints {
+    &.input-group {
+      // width: auto;
+      justify-content: flex-end;
     }
 
-    .custom-control-label::before {
-        border: 1px solid rgb(35, 67, 78);
+    .form-control {
+      // display: inline-block;
+      width: auto;
     }
 
-    .custom-control-input:not(:checked) ~.custom-control-label::before {
-        background-color: lightblue;
+    &.input-group > .form-control {
+      flex: none;
     }
-    
-    .custom-control-label::after {
-        cursor: pointer;
-    }
+  }
 
-    .answerPoints {
-        &.input-group {
-            // width: auto;
-            justify-content: flex-end;
-        }
+  .quiz-title {
+    border: none;
+  }
 
-        .form-control {
-            // display: inline-block;
-            width: auto;
-        }
+  .text-white {
+    border: none;
+  }
 
-        &.input-group > .form-control {
-            flex: none;
-        }
-    }
+  .card-title {
+    font-size: 6rem;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-family: "Roboto";
+  }
+
+  .card-title:hover {
+    color: whitesmoke;
+  }
+
+  .displayError {
+    margin-bottom: 1rem;
+  }
 }

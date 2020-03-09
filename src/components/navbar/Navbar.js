@@ -11,7 +11,10 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav
+        id="navbar"
+        className="navbar navbar-expand-lg navbar-light bg-light"
+      >
         <Link to="/" className="logohere">
           Quiz master
         </Link>
@@ -33,19 +36,10 @@ class Navbar extends React.Component {
                 Home
               </NavLink>
             </li>
-            <li className="link-nav">
-              <NavLink className="link-nav" to="/Quiz">
-                Quiz
-              </NavLink>
-            </li>
             <li>
-              {this.props.user ? (
-                <NavLink className="link-nav" to="/CreateQuiz">
-                  Create Quiz
-                </NavLink>
-              ) : (
-                ""
-              )}
+              <NavLink className="link-nav" to="/CreateQuiz">
+                Create Quiz
+              </NavLink>
             </li>
             <li>
               <NavLink className="link-nav" to="/SignUp">
