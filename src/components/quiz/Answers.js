@@ -2,22 +2,26 @@ import React from 'react'
 
 function Answers({answer, answerKey, onAnswerChange}) {
     return (
-        <div className="answer input-group">
-            <div className="input-group-prepend">
-                <div className="input-group-text">
-                    <input 
-                        type="checkbox"
-                        name={answerKey}
-                        id={answerKey} 
-                        onChange={onAnswerChange}
-                    />
-                </div>
+        <div className="answer input-group d-flex flex-row align-items-center">
+            <div className="custom-control custom-checkbox">
+                <input 
+                    className="custom-control-input"
+                    id={answerKey} 
+                    name={answerKey}
+                    type="checkbox" 
+                    onChange={onAnswerChange}
+                />
+                <label 
+                    className="custom-control-label" 
+                    htmlFor={answerKey}
+                />
             </div>
+            
             <label 
-                className="form-control"
+                className="form-control" 
                 htmlFor={answerKey}
-            >
-                {answer}
+                >
+                    {answer}
             </label>
         </div>
     )

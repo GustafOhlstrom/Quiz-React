@@ -1,81 +1,135 @@
 #createQuiz {
-  .input-group-prepend .input-group-text {
-    background-color: rgb(181, 227, 253);
-  }
+	
+	.quiz-title {
+		.card {
+			border: none;
+		}
 
-  .input-group-append {
-    border: none;
-    cursor: pointer;
+		.card-title {
+			font-size: 2rem;
+			color: whitesmoke;
+			text-transform: uppercase;
+		}
+	
+		.card-img {
+			max-height: 100px;
+			max-width: 100%;
+			object-fit: cover;
+		}
+	}
 
-    .input-group-text {
-      background-color: white;
-      border-color: white;
-    }
+	.question {
+		padding-top: 2rem;
+		border-top: 1px solid rgb(253, 217, 163);
+	}
 
-    .add-icon {
-      min-width: 40px;
-      color: rgb(3, 192, 3);
-    }
+	.input-group-text,
+	.form-control {
+		border: none;
+	}
 
-    .remove-icon {
-      min-width: 40px;
-      color: rgb(252, 0, 0);
-    }
-  }
+	.input-group-prepend .input-group-text {
+		// background-color: rgb(181, 227, 253);
+		background-color: rgb(253, 217, 163);
+	}
 
-  .question-icons.input-group-append .remove-icon {
-    min-width: 20px;
-    padding-right: 0;
-  }
+	.input-group-append {
+		border: none;
+		cursor: pointer;
 
-  .custom-control-label::before {
-    border: 1px solid rgb(35, 67, 78);
-  }
+		.input-group-text {
+			background-color: white;
+			border-color: white;
+		}
 
-  .custom-control-input:not(:checked) ~ .custom-control-label::before {
-    background-color: lightblue;
-  }
+		.add-icon {
+			min-width: 40px;
+			color: rgb(3, 192, 3);
+		}
 
-  .custom-control-label::after {
-    cursor: pointer;
-  }
+		.remove-icon {
+			min-width: 40px;
+			margin-right: 1px;
+			color: rgb(252, 0, 0);
+		}
+	}
 
-  .answerPoints {
-    &.input-group {
-      // width: auto;
-      justify-content: flex-end;
-    }
+	.question-icons.input-group-append .remove-icon {
+		min-width: 20px;
+		padding-right: 0;
+	}
 
-    .form-control {
-      // display: inline-block;
-      width: auto;
-    }
+	.custom-checkbox {
+		
 
-    &.input-group > .form-control {
-      flex: none;
-    }
-  }
+		.custom-control-label::before {
+			border: 1px solid rgb(35, 67, 78);
+		}
 
-  .quiz-title {
-    border: none;
-  }
+		.custom-control-input:not(:checked) ~ .custom-control-label::before {
+			// background-color: rgb(181, 227, 253);
+			background-color: rgb(253, 217, 163);
+			border: none;
+		}
 
-  .text-white {
-    border: none;
-  }
+		.custom-control-input:checked ~ .custom-control-label::before {
+			background-color: orange;
+			border: none;
+		}
 
-  .card-title {
-    font-size: 6rem;
-    color: whitesmoke;
-    text-transform: uppercase;
-    font-family: "Roboto";
-  }
+		.custom-control-input:checked:focus ~ .custom-control-label::before {
+			box-shadow: none;
+		}
 
-  .card-title:hover {
-    color: whitesmoke;
-  }
+		.custom-control-input:focus ~ .custom-control-label::before {
+			box-shadow: none;
+		}
 
-  .displayError {
-    margin-bottom: 1rem;
-  }
+		.custom-control-label::after {
+			cursor: pointer;
+		}
+	}
+
+	.answerPoints {
+		&.input-group {
+			justify-content: flex-end;
+		}
+
+		.form-control {
+			flex: none;
+			width: 4.5rem;
+		}
+	}
+
+	.btn-outline-dark {
+			color: white;
+			border-color: white;
+
+			&:hover {
+				background-color: white; 
+				color: black;
+				border-color: black;
+			}
+	}
+
+	@media screen and (min-width: 768px) {
+
+		.custom-checkbox {
+			margin-left: -1.5rem;
+		}
+	
+		.quiz-title {
+
+			.card-title {
+				font-size: 4rem;
+			}
+		
+			.card-img {
+				max-height: 200px;
+			}
+		}
+		
+	}
+  
 }
+

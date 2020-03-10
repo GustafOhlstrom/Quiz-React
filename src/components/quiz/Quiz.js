@@ -14,11 +14,10 @@ class Quiz extends Component {
         score: 0,
         maxScore: 0,
         submited: false,
+        errMsg: "",
     }
 
     componentDidMount = () => {
-        // Get key from router
-        
         db.collection('quizes').doc(this.props.match.params.quiz_id).get()
             .then(snapshot => {
                 // Create emtpy userAnswers object using the index as key
@@ -55,7 +54,7 @@ class Quiz extends Component {
                     userAnswers: emptyUserAnswers
                 })
             })
-            .catch(err => console.log("Could not get quiz", err))
+            .catch(err => this.setState({errMsg: "Could not find quiz"}))
     }
 
     handleAnswerChange = (e, questionKey) => {
@@ -81,7 +80,12 @@ class Quiz extends Component {
             this.setState({missingAnswerMsg: "You need to answer all questions before submitting the quiz"})
         } else {
             // Stop form interactions after submit
-            Array.from(e.target.elements).forEach(ele => ele.setAttribute("disabled", "disabled"))
+            Array.from(e.target.elements).forEach(ele => {
+                ele.setAttribute("disabled", "disabled")
+            })
+            // Remove pointer events
+            document.querySelector(".quiz-form").classList.add("disable-form")
+
 
             // All questions answered
             let maxPoints = 0;
@@ -115,12 +119,20 @@ class Quiz extends Component {
 
     render() {
         const { questions, title, missingAnswerMsg, score, maxScore, submited } = this.state
+        let resultMsg;
+        if(score/maxScore > 0.7) {
+            resultMsg = <div className="alert alert-info bg-success text-white" role="alert">You scored {score}/{maxScore}</div>
+        } else if (score/maxScore > 0.5) {
+            resultMsg = <div className="alert alert-info bg-warning text-white" role="alert">You scored {score}/{maxScore}</div>
+        } else {
+            resultMsg = <div className="alert alert-info bg-danger text-white" role="alert">You scored {score}/{maxScore}</div>
+        }
         return (
-            <div className="quiz container text-center">
+            <div id="quiz" className="container text-center">
                 {title ? (
                     <>
                         <h1 className="my-4 font-weight-bold">{title.toUpperCase()}</h1>
-                        <form onSubmit={this.handleSubmit} className="mb-5">
+                        <form onSubmit={this.handleSubmit} className="quiz-form mb-5">
                             {Object.keys(questions).map(questionKey => 
                                 <Question 
                                     key={questionKey} 
@@ -130,18 +142,23 @@ class Quiz extends Component {
                                 />
                             )}
                             { missingAnswerMsg && 
-                                <div className="alert alert-warning" role="alert">{missingAnswerMsg}</div> 
+                                <p className="text-warning text-center mb-3">{missingAnswerMsg}</p>
                             }
-                            { submited > 0 &&
-                                <div className="alert alert-info" role="alert">You scored {score}/{maxScore}</div>
-                            }
-                            <button type="submit" className="btn btn-outline-primary">Submit</button>
+                            { submited > 0 && resultMsg }
+                            <button type="submit" className="btn btn-outline-dark">Submit</button>
                         </form> 
                     </>
-                    ): (
-                        <div className="spinner-border" role="status">
-                            <span className="sr-only">Loading...</span>
-                        </div>
+                    ): (this.state.errMsg ?
+                        (
+                            <div className="alert alert-warning mt-5" role="alert">
+                                {this.state.errMsg}
+                            </div>
+                        ):
+                        (
+                            <div className="spinner-border mt-5" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        )
                     )
                 }
             </div>

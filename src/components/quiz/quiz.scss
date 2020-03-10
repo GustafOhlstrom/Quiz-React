@@ -1,31 +1,80 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+#quiz {
+    color: white;
 
-body {
-    font-family: 'Montserrat', 'Roboto', sans-serif;
-}
+    .disable-form {
+        pointer-events: none;
+    }
 
-.quiz {
+    .question-container {
+        border: 1px solid rgb(253, 217, 163);
+        border-radius: 0.25rem;
+    }
 
     .question {
-        label {
-            font-weight: bold;
-            background-color: lightcyan;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0.25rem;
+        background-color: rgb(253, 217, 163);
+        
+        .center-fix {
+            color: rgb(253, 217, 163);
+            visibility: hidden;
         }
 
-        .input-group-text {
-            border-top-right-radius: 0.25rem;
+        label {
+            font-weight: bold;
+            // background-color: lightcyan;
+            background-color: rgb(253, 217, 163);
+            border: none;
         }
-        
+    }
+
+    .answers {
+        background-color: whitesmoke;
+
+        .answer {
+            border-top: 1px solid #8a8a8a;
+            padding-right: 2rem;
+        }
+
+        .form-control {
+            cursor: pointer;
+            background-color: whitesmoke;
+            border: none;
+        }
+
+        .custom-checkbox {
+            
+            .custom-control-label {
+                height: auto;
+                margin-left: 0.5rem;
+            }
+    
+            .custom-control-label::before {
+                border: 1px solid #8a8a8a;
+            }
+    
+            .custom-control-input:not(:checked) ~ .custom-control-label::before {
+                // background-color: rgb(181, 227, 253);
+                background-color: rgb(253, 217, 163);
+            }
+    
+            .custom-control-input:checked ~ .custom-control-label::before {
+                background-color: orange;
+            }
+    
+            .custom-control-input:checked:focus ~ .custom-control-label::before {
+                box-shadow: none;
+            }
+    
+            .custom-control-input:focus ~ .custom-control-label::before {
+                box-shadow: none;
+            }
+    
+            .custom-control-label::after {
+                cursor: pointer;
+            }
+    
+        }
+
     }
 
     .input-group-text,
@@ -36,31 +85,20 @@ body {
     }
 
     .input-group-text {
-        background-color: lightcyan;
+        // background-color: lightcyan;
+        background-color: rgb(253, 217, 163);
         border: none;
     }
 
-    .answers {
+    .btn-outline-dark {
+        color: white;
+        border-color: white;
 
-        .form-control {
-            cursor: pointer;
-            background-color:rgba(224, 255, 255, 0.25);
+        &:hover {
+            background-color: white; 
+            color: black;
+            border-color: black;
         }
-
-        .answer {
-            margin-top: -1px;
-        }
-
-        .answer:last-child {
-            .form-control {
-                border-bottom-right-radius: 0.25rem;
-            }
-
-            .input-group-text {
-                border-bottom-left-radius: 0.25rem;
-            }
-        }
-        
     }
 
 }

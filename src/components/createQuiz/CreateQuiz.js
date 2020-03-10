@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.css";
 import "./createQuiz.scss";
 import React, { Component } from "react";
 import CreateQuestion from "./CreateQuestion";
@@ -12,18 +11,9 @@ function getId() {
 
 class CreateQuiz extends Component {
   state = {
-    title: "Test Quiz",
-    questions: {
-      ["Q" + getId()]: {
-        question: "Test",
-        answers: {
-          ["A" + getId()]: "a1",
-          ["A" + getId()]: "a2"
-        },
-        correctAnswers: {},
-        pointsPerAnswer: 1
-      }
-    }
+    title: "",
+    questions: {},
+    errMsg: "",
   };
 
   handleTitleChange = e => this.setState({ title: e.target.value });
@@ -66,28 +56,28 @@ class CreateQuiz extends Component {
   };
 
   handlePointsChange = (e, questionKey) => {
-    const value = e.target.value;
-    this.setState(state => {
-      let questions = { ...state.questions };
-      questions[questionKey].pointsPerAnswer = value;
-      return { questions: questions };
-    });
+		const value = e.target.value;
+		if(typeof Number(value) === 'number' && value <= 999) {
+			this.setState(state => {
+				let questions = { ...state.questions };
+				questions[questionKey].pointsPerAnswer = Number(value);
+				return { questions: questions };
+			});
+		}
   };
 
   // Answers handlers
 
   handleAnswerChange = (e, answerChecked, answerKey, questionKey) => {
-    console.log(answerChecked);
     // Name stores answer index
     const { value } = e.target;
     this.setState(state => {
       let questions = { ...state.questions };
       // Update correct answer if checked as one
-      if (answerChecked)
-        questions[questionKey].correctAnswers[answerKey] = value;
-      // Update answer value
-      questions[questionKey].answers[answerKey] = value;
-      return { questions: questions };
+      if (answerChecked) questions[questionKey].correctAnswers[answerKey] = value;
+			// Update answer value
+			questions[questionKey].answers[answerKey] = value;
+			return { questions: questions };
     });
   };
 
@@ -115,7 +105,6 @@ class CreateQuiz extends Component {
   handleRemoveAnswerClick = (answerKey, questionKey) => {
     // Check if more than two answers exists
     if (Object.keys(this.state.questions[questionKey].answers).length > 2) {
-      console.log("More than two answers exists, go ahead and remove");
       this.setState(state => {
         let questions = { ...state.questions };
         // remove answer and remove answer from correctAnser
@@ -145,39 +134,40 @@ class CreateQuiz extends Component {
           Object.keys(questions[questionKey].answers).forEach(answerKey => {
             if (!questions[questionKey].answers[answerKey]) {
               submit = false;
-              alert("Quiz answers can't be empty when submitting a quiz");
+              this.setState({errMsg: "Quiz answers can't be empty when submitting a quiz"});
             }
           });
 
           // Check if atleast one correctAnswer is selected
           if (Object.keys(questions[questionKey].correctAnswers).length < 1) {
             submit = false;
-            alert(
-              "A correct answer needs to be selected for each question before submitting a quiz"
-            );
+            this.setState({errMsg: "A correct answer needs to be selected for each question before submitting a quiz"});
           }
         } else {
-          alert("Quiz questions cannot be empty when submitting a quiz");
-          return null;
+          submit = false;
+          this.setState({errMsg: "Quiz questions cannot be empty when submitting a quiz"});
         }
       });
 
       // Submit quiz
       if (submit) {
         db.collection("quizes")
-          .add({ ...this.state })
+          .add({ 
+            title: this.state.title,
+            questions: this.state.questions
+          })
           .then(doc => {
             this.props.history.push("/" + doc.id);
           })
           .catch(err => alert("Error adding quiz: ", err));
       }
     } else {
-      alert("Quiz needs a title to be submitted");
+      this.setState({errMsg: "Quiz needs a title to be submitted"});
     }
   };
 
   render() {
-    const { title, questions } = this.state;
+    const { title, questions, errMsg } = this.state;
     return (
         !this.props.user ?  
             (<div className="container alert alert-secondary mt-5 text-center" role="alert">
@@ -185,104 +175,82 @@ class CreateQuiz extends Component {
             </div>) : 
             (<div id="createQuiz">
                 <div className="quiz-title mx-auto my-5 container">
-                <div className="card bg-light text-white text-center">
-                    <img
-                    className="card-img"
-                    src={cardImage}
-                    style={{
-                        maxHeight: "200px",
-                        maxWidth: "100%",
-                        objectFit: "cover"
-                    }}
-                    alt="Questionmark of question"
-                    />
+                  <div className="card bg-light text-white text-center">
+                      <img
+                        className="card-img"
+                        src={cardImage}
+                        alt="Questionmark of question"
+                      />
 
-                    <div className="card-img-overlay align-items-center d-flex justify-content-center">
-                    <h1 className="card-title">Create quiz</h1>
-                    </div>
-                </div>
+                      <div className="card-img-overlay align-items-center d-flex justify-content-center">
+                        <h1 className="card-title">Create a quiz</h1>
+                      </div>
+                  </div>
                 </div>
                 <form onSubmit={this.handleSubmit} className="container mb-5">
-                {/* Quiz Title */}
-                <div className="input-group mb-5">
-                    <div className="input-group mb-2">
-                    <div className="input-group-prepend">
-                        <div className="input-group-text">
-                        <label className="mb-0" htmlFor="title">
-                            Quiz Title
-                        </label>
-                        </div>
+                  {/* Quiz Title */}
+                  <div className="input-group mb-5">
+                      <div className="input-group mb-2">
+                      <div className="input-group-prepend">
+                          <div className="input-group-text">
+                          <label className="mb-0" htmlFor="title">
+                              Quiz Title
+                          </label>
+                          </div>
+                      </div>
+                      <input
+                          id="title"
+                          className="form-control"
+                          placeholder="Enter quiz title"
+                          type="text"
+                          value={title}
+                          onChange={this.handleTitleChange}
+                      />
+                      </div>
+                  </div>
+
+                  {Object.keys(questions).map(questionKey => {
+                      return (
+                      <CreateQuestion
+                          key={questionKey}
+                          question={questions[questionKey]}
+                          questionKey={questionKey}
+                          // Used in CreateQuestion
+                          onQuestionChange={e => this.handleQuestionChange(e, questionKey)}
+                          onRemoveQuestionClick={() => this.handleRemoveQuestionClick(questionKey)}
+                          onNewAnswerClick={() => this.handleNewAnswerClick(questionKey)}
+                          onPointsChange={e => this.handlePointsChange(e, questionKey)}
+                          // Used in Create Answer
+                          onAnswerChange={(e, answerChecked, answersKey) => this.handleAnswerChange(e, answerChecked, answersKey, questionKey)}
+                          onCorrectAnswerChange={(e, answer, answersKey) => this.handleCorrectAnswerChange(e, answer, answersKey,questionKey)}
+                          onRemoveAnswerClick={answerIndex => this.handleRemoveAnswerClick(answerIndex, questionKey)}
+                      />
+                      );
+                  })}
+
+                  {/* New Question Button */}
+                  <div className="form-group">
+                      <button
+                      className="btn btn-outline-dark d-block ml-auto"
+                      type="button"
+                      onClick={this.handleNewQuestionClick}
+                      >
+                      Add Question
+                      </button>
+                  </div>
+
+                  {/* From Submit Button and error msg*/}
+                  <div className="mt-5">
+                    {errMsg && ( <p className="text-warning text-center mb-3">{errMsg}</p>)}
+                    <div className="form-group">
+                        <button 
+                          type="submit" 
+                          className="btn btn-outline-dark d-block mx-auto"
+                        >
+                          Submit
+                        </button>
                     </div>
-                    <input
-                        id="title"
-                        className="form-control"
-                        placeholder="Enter quiz title"
-                        type="text"
-                        value={title}
-                        onChange={this.handleTitleChange}
-                    />
-                    </div>
-                </div>
-
-                {Object.keys(questions).map(questionKey => {
-                    return (
-                    <CreateQuestion
-                        key={questionKey}
-                        question={questions[questionKey]}
-                        questionKey={questionKey}
-                        // Used in CreateQuestion
-                        onQuestionChange={e =>
-                        this.handleQuestionChange(e, questionKey)
-                        }
-                        onRemoveQuestionClick={() =>
-                        this.handleRemoveQuestionClick(questionKey)
-                        }
-                        onNewAnswerClick={() => this.handleNewAnswerClick(questionKey)}
-                        onPointsChange={e => this.handlePointsChange(e, questionKey)}
-                        // Used in Create Answer
-                        onAnswerChange={(e, answerChecked, answersKey) =>
-                        this.handleAnswerChange(
-                            e,
-                            answerChecked,
-                            answersKey,
-                            questionKey
-                        )
-                        }
-                        onCorrectAnswerChange={(e, answer, answersKey) =>
-                        this.handleCorrectAnswerChange(
-                            e,
-                            answer,
-                            answersKey,
-                            questionKey
-                        )
-                        }
-                        onRemoveAnswerClick={answerIndex =>
-                        this.handleRemoveAnswerClick(answerIndex, questionKey)
-                        }
-                    />
-                    );
-                })}
-
-                {/* New Question Button */}
-                <div className="form-group">
-                    <button
-                    className="btn btn-light d-block ml-auto"
-                    type="button"
-                    onClick={this.handleNewQuestionClick}
-                    >
-                    Add Question
-                    </button>
-                </div>
-
-                {/* From Submit Button */}
-                <div className="form-group">
-                    <button
-                    className="btn btn-light d-block mx-auto mt-5"
-                    type="submit"
-                    >
-                    Submit Quiz
-                    </button>
-                </div>
+                  </div>
                 </form>
             </div>
             )

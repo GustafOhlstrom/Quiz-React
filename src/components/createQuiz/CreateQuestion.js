@@ -18,7 +18,7 @@ function CreateQuestion(props) {
     } = props
     
     return (
-        <div className="input-group mb-5">
+        <div className="question input-group mb-5">
             {/* Question */}
             <div className="input-group mb-2">
                 <div className="input-group-prepend">
@@ -69,8 +69,8 @@ function CreateQuestion(props) {
                 <input
                     id={"P" + questionKey}
                     className="form-control"
-                    placeholder="Enter question"
                     type="number"
+                    max="999"
                     value={pointsPerAnswer}
                     onChange={onPointsChange}
                 />

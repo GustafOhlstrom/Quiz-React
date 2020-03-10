@@ -1,8 +1,7 @@
 import React from "react";
 import { db } from "../config/fbConfig";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./home.scss";
-import Quiz from "./quiz/Quiz";
 
  
 class Home extends React.Component {
@@ -33,7 +32,7 @@ class Home extends React.Component {
       const cardTitle = this.state.quizes ?  
       this.state.quizes.map((q) => {
         return (
-          <div key={q.id} className="card col-3 "  style={{ height:"10rem", width: "15rem "}}>
+          <div key={q.id} className="card col-3 " style={{ height:"10rem", width: "15rem "}}>
             <div className="card-body align-items-center d-flex justify-content-center">
               <h5 className="card-title text-center">{q.title.charAt(0).toUpperCase() + q.title.slice(1)}</h5>
             </div>

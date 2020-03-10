@@ -25,7 +25,7 @@ class CreateAnswer extends Component {
         return (
             // Answer
             <div className="d-flex align-items-center mb-2 w-100">
-                <div className="custom-control custom-checkbox ml-3">
+                <div className="custom-control custom-checkbox">
                     <input 
                         id={"C" + answerKey}
                         className="custom-control-input"
