@@ -1,66 +1,55 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap');
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Montserrat', 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .quiz {
-
-    .question {
-        label {
-            font-weight: bold;
-            background-color: lightcyan;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0.25rem;
-        }
-
-        .input-group-text {
-            border-top-right-radius: 0.25rem;
-        }
-        
-    }
-
-    .input-group-text,
-    .form-control {
-        border-radius: 0;
-        overflow-wrap: normal;
-        height: auto;
+  .question {
+    label {
+      font-weight: bold;
+      background-color: lightcyan;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0.25rem;
     }
 
     .input-group-text {
-        background-color: lightcyan;
-        border: none;
+      border-top-right-radius: 0.25rem;
+    }
+  }
+
+  .input-group-text,
+  .form-control {
+    border-radius: 0;
+    overflow-wrap: normal;
+    height: auto;
+  }
+
+  .input-group-text {
+    background-color: lightcyan;
+    border: none;
+  }
+
+  .answers {
+    .form-control {
+      cursor: pointer;
+      background-color: rgba(224, 255, 255, 0.25);
     }
 
-    .answers {
-
-        .form-control {
-            cursor: pointer;
-            background-color:rgba(224, 255, 255, 0.25);
-        }
-
-        .answer {
-            margin-top: -1px;
-        }
-
-        .answer:last-child {
-            .form-control {
-                border-bottom-right-radius: 0.25rem;
-            }
-
-            .input-group-text {
-                border-bottom-left-radius: 0.25rem;
-            }
-        }
-        
+    .answer {
+      margin-top: -1px;
     }
 
+    .answer:last-child {
+      .form-control {
+        border-bottom-right-radius: 0.25rem;
+      }
+
+      .input-group-text {
+        border-bottom-left-radius: 0.25rem;
+      }
+    }
+  }
 }
