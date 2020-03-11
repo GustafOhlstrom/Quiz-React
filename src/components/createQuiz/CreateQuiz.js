@@ -1,9 +1,8 @@
-import "bootstrap/dist/css/bootstrap.css";
 import "./createQuiz.scss";
 import React, { Component } from "react";
 import CreateQuestion from "./CreateQuestion";
 import { db } from "../../config/fbConfig";
-import cardImage from "../images/questions.jpg";
+import cardImage from "../../assets/images/questions.jpg";
 
 function getId() {
   const uniqid = require("uniqid");
@@ -77,7 +76,6 @@ class CreateQuiz extends Component {
   // Answers handlers
 
   handleAnswerChange = (e, answerChecked, answerKey, questionKey) => {
-    console.log(answerChecked);
     // Name stores answer index
     const { value } = e.target;
     this.setState(state => {
@@ -115,7 +113,6 @@ class CreateQuiz extends Component {
   handleRemoveAnswerClick = (answerKey, questionKey) => {
     // Check if more than two answers exists
     if (Object.keys(this.state.questions[questionKey].answers).length > 2) {
-      console.log("More than two answers exists, go ahead and remove");
       this.setState(state => {
         let questions = { ...state.questions };
         // remove answer and remove answer from correctAnser
@@ -262,7 +259,7 @@ class CreateQuiz extends Component {
           {/* New Question Button */}
           <div className="form-group">
             <button
-              className="btn btn-light d-block ml-auto"
+              className="btn btn-dark d-block ml-auto"
               type="button"
               onClick={this.handleNewQuestionClick}
             >
@@ -272,10 +269,7 @@ class CreateQuiz extends Component {
 
           {/* From Submit Button */}
           <div className="form-group">
-            <button
-              className="btn btn-light d-block mx-auto mt-5"
-              type="submit"
-            >
+            <button className="btn btn-dark d-block mx-auto mt-5" type="submit">
               Submit Quiz
             </button>
           </div>

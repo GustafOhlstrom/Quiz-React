@@ -1,4 +1,5 @@
 #navbar {
+  background-color: whitesmoke;
   .container {
     max-width: 400px;
   }
@@ -9,8 +10,8 @@
 }
 
 .navbar-expand-lg .navbar-collapse {
-  justify-content: right;
   margin-right: 4rem;
+  justify-content: flex-end;
 }
 
 .navbar-brand {
@@ -33,14 +34,22 @@ a:hover {
 .link-nav {
   text-decoration: none;
   color: black;
-  margin-right: 1.1rem;
-  padding-bottom: 2rem;
   text-transform: uppercase;
   font-weight: 100;
+  letter-spacing: 4px;
+}
+
+.link-nav:hover {
+  color: orange;
 }
 
 .link-nav .active {
   margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  margin-bottom: 2rem;
 }
 
 .logohere {
@@ -57,7 +66,7 @@ a:hover {
 
 .logohere {
   color: black;
-  margin-left: 4rem;
+  margin-left: 2.5rem;
   font-size: 1.4rem;
 }
 

@@ -11,10 +11,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <nav
-        id="navbar"
-        className="navbar navbar-expand-lg navbar-light bg-light"
-      >
+      <nav id="navbar" className="navbar navbar-expand-lg navbar-light ">
         <Link to="/" className="logohere">
           Quiz master
         </Link>
@@ -30,21 +27,25 @@ class Navbar extends React.Component {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="link-nav">
-              <NavLink className="link-nav" to="/">
+          <ul className="navbar-nav ">
+            <li className="link-nav mr-4">
+              <NavLink className="link-nav " to="/">
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink className="link-nav" to="/CreateQuiz">
+              <NavLink className="link-nav mr-4" to="/CreateQuiz">
                 Create Quiz
               </NavLink>
             </li>
             <li>
-              <NavLink className="link-nav" to="/SignUp">
-                Sign Up
-              </NavLink>
+              {this.props.user ? (
+                ""
+              ) : (
+                <NavLink className="link-nav mr-4" to="/SignUp">
+                  Sign Up
+                </NavLink>
+              )}
             </li>
             <li>
               {this.props.user ? (
