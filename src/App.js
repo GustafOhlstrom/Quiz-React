@@ -3,9 +3,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { auth } from "./config/fbConfig";
 
 import Navbar from "./components/navbar/Navbar";
-import LogIn from "./components/LogIn";
-import SignUp from "./components/SignUp";
-import Home from "./components/Home";
+import LogIn from "./components/login/LogIn";
+import SignUp from "./components/signup/SignUp";
+import Home from "./components/home/Home";
 import Quiz from "./components/quiz/Quiz";
 import CreateQuiz from "./components/createQuiz/CreateQuiz";
 

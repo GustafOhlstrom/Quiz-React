@@ -1,26 +1,26 @@
-import React, { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 class CreateAnswer extends Component {
     state = {
-        answerChecked: false,
-    }
+        answerChecked: false
+    };
 
     handleChange = e => {
         this.setState(
-            {answerChecked: e.target.checked},
+            { answerChecked: e.target.checked },
             this.props.onCorrectAnswerChange(e)
-        )
-    }
+        );
+    };
 
     render() {
-        const { 
-            answerKey, 
-            answer, 
-            onAnswerChange, 
+        const {
+            answerKey,
+            answer,
+            onAnswerChange,
             onRemoveAnswerClick
-        } = this.props
+        } = this.props;
 
         return (
             // Answer
@@ -67,8 +67,8 @@ class CreateAnswer extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default CreateAnswer
+export default CreateAnswer;

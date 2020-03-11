@@ -29,7 +29,6 @@
 	}
 
 	.input-group-prepend .input-group-text {
-		// background-color: rgb(181, 227, 253);
 		background-color: rgb(253, 217, 163);
 	}
 
@@ -60,14 +59,11 @@
 	}
 
 	.custom-checkbox {
-		
-
 		.custom-control-label::before {
 			border: 1px solid rgb(35, 67, 78);
 		}
 
 		.custom-control-input:not(:checked) ~ .custom-control-label::before {
-			// background-color: rgb(181, 227, 253);
 			background-color: rgb(253, 217, 163);
 			border: none;
 		}
@@ -102,18 +98,17 @@
 	}
 
 	.btn-outline-dark {
-			color: white;
-			border-color: white;
+		color: white;
+		border-color: white;
 
-			&:hover {
-				background-color: white; 
-				color: black;
-				border-color: black;
-			}
+		&:hover {
+			background-color: white; 
+			color: black;
+			border-color: black;
+		}
 	}
 
 	@media screen and (min-width: 768px) {
-
 		.custom-checkbox {
 			margin-left: -1.5rem;
 		}
@@ -130,6 +125,5 @@
 		}
 		
 	}
-  
 }
 

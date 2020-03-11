@@ -1,8 +1,8 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import './quiz.scss'
-import React, { Component } from 'react'
-import { db } from '../../config/fbConfig'
-import Question from './Question'
+import "bootstrap/dist/css/bootstrap.css";
+import "./quiz.scss";
+import React, { Component } from "react";
+import { db } from "../../config/fbConfig";
+import Question from "./Question";
 
 class Quiz extends Component {
     state = {
@@ -56,20 +56,7 @@ class Quiz extends Component {
             })
             .catch(err => this.setState({errMsg: "Could not find quiz"}))
     }
-
-    handleAnswerChange = (e, questionKey) => {
-        const { id, checked } = e.target
-        this.setState(state => {
-            let newUserAnswers = { ...state.userAnswers }
-            // Add answer if check, remove if unchecked
-            checked ? 
-                newUserAnswers[questionKey] = newUserAnswers[questionKey].concat(id) :
-                newUserAnswers[questionKey] = newUserAnswers[questionKey].filter(answerKey => answerKey !== id)
-
-            return { userAnswers: newUserAnswers }
-        })
-    }
-
+    
     handleSubmit = e => {
         e.preventDefault()
         const { userAnswers, questions } = this.state
@@ -141,9 +128,7 @@ class Quiz extends Component {
                                     onAnswerChange={e => this.handleAnswerChange(e, questionKey)}
                                 />
                             )}
-                            { missingAnswerMsg && 
-                                <p className="text-warning text-center mb-3">{missingAnswerMsg}</p>
-                            }
+                            { missingAnswerMsg && <p className="text-warning text-center mb-3">{missingAnswerMsg}</p> }
                             { submited > 0 && resultMsg }
                             <button type="submit" className="btn btn-outline-dark">Submit</button>
                         </form> 
@@ -166,4 +151,4 @@ class Quiz extends Component {
     }
 }
 
-export default Quiz
+export default Quiz;

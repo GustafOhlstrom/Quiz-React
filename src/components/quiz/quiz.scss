@@ -72,9 +72,7 @@
             .custom-control-label::after {
                 cursor: pointer;
             }
-    
         }
-
     }
 
     .input-group-text,
@@ -101,4 +99,13 @@
         }
     }
 
+    .answer:last-child {
+        .form-control {
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .input-group-text {
+            border-bottom-left-radius: 0.25rem;
+        }
+    }
 }

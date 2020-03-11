@@ -1,76 +1,86 @@
 #navbar {
-  .container {
-    max-width: 400px;
-  }
-}
+	background-color: whitesmoke;
+	
+	.container {
+		max-width: 400px;
+	}
 
-.form-control {
-  border: none;
-}
+	.form-control {
+		border: none;
+	}
 
-.navbar-expand-lg .navbar-collapse {
-  justify-content: flex-end;
-  margin-right: 4rem;
-}
+	&.navbar-expand-lg .navbar-collapse {
+		margin-right: 4rem;
+		justify-content: flex-end;
+	}
 
-.navbar-brand {
-  margin-left: 2rem;
-}
+	.navbar-brand {
+		margin-left: 2rem;
+	}
 
-.navbar-expand-lg .navbar-nav {
-  margin-top: 1.9rem;
-}
+	&.navbar-expand-lg .navbar-nav {
+		margin-top: 2rem;
+	}
 
-a .rounded {
-  display: auto;
-}
+	a .rounded {
+		display: auto;
+	}
 
-a:hover {
-  color: whitesmoke;
-  text-decoration: none;
-}
+	a:hover {
+		color: whitesmoke;
+		text-decoration: none;
+	}
 
-.link-nav {
-  text-decoration: none;
-  color: black;
-  margin-right: 1.1rem;
-  padding-bottom: 2rem;
-  text-transform: uppercase;
-  font-weight: 100;
-}
+	.link-nav {
+		text-decoration: none;
+		color: black;
+		text-transform: uppercase;
+		font-weight: 100;
+		letter-spacing: 4px;
+	}
 
-.link-nav .active {
-  margin-top: 2rem;
-}
+	.link-nav:hover {
+		color: orange;
+	}
 
-.logohere {
-  text-transform: uppercase;
-}
+	.link-nav .active {
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
 
-li {
-  list-style: none;
-}
+	&.navbar-expand-lg .navbar-collapse {
+		margin-bottom: 2rem;
+	}
 
-a:hover {
-  color: black;
-}
+	.logohere {
+		text-transform: uppercase;
+	}
 
-.logohere {
-  color: black;
-  margin-left: 4rem;
-  font-size: 1.4rem;
-}
+	li {
+		list-style: none;
+	}
 
-.logohere:hover {
-  color: black;
-}
+	a:hover {
+		color: black;		
+	}
 
-.loggedin-andout {
-  margin-left: 4rem;
-  margin-top: 1rem;
-  color: black;
-}
+	.logohere {
+		color: black;
+		margin-left: 2.5rem;
+		font-size: 1.4rem;
+	}
 
-.btn {
-  text-transform: uppercase;
+	.logohere:hover {
+		color: black;
+	}
+
+	.loggedin-andout {
+		margin-left: 4rem;
+		margin-top: 1rem;
+		color: black;
+	}
+
+	.btn {
+		text-transform: uppercase;
+	}
 }

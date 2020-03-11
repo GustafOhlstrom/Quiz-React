@@ -16,7 +16,6 @@ function Answers({answer, answerKey, onAnswerChange}) {
                     htmlFor={answerKey}
                 />
             </div>
-            
             <label 
                 className="form-control" 
                 htmlFor={answerKey}
