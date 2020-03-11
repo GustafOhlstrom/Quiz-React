@@ -42,7 +42,10 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/CreateQuiz" component={CreateQuiz} />
+            <Route 
+              path="/CreateQuiz" 
+              render={(props) => <CreateQuiz{...props} user={this.state.user} />}
+            />
             <Route path="/LogIn" component={LogIn} />
             <Route path="/SignUp" component={SignUp} />
             <Route path="/:quiz_id" component={Quiz} />

@@ -175,7 +175,14 @@ class CreateQuiz extends Component {
 
   render() {
     const { title, questions } = this.state;
-    return (
+    return !this.props.user ? (
+      <div
+        className="container alert alert-secondary mt-5 text-center"
+        role="alert"
+      >
+        You need to be logged in to create a quiz
+      </div>
+    ) : (
       <div id="createQuiz">
         <div className="quiz-title mx-auto my-5 container">
           <div className="card bg-light text-white text-center">
