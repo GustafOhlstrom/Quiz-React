@@ -1,7 +1,7 @@
+import "./home.scss";
 import React from "react";
 import { db } from "../../config/fbConfig";
 import { NavLink } from "react-router-dom";
-import "./home.scss";
  
 class Home extends React.Component {
 	state = {

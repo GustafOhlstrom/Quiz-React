@@ -44,7 +44,6 @@ class Quiz extends Component {
                         questions[key].displayOrder[spotsToFill] = questions[key].displayOrder[index]
                         questions[key].displayOrder[index] = temp
                     }
-
                 })
 
                 this.setState({
@@ -56,6 +55,19 @@ class Quiz extends Component {
             })
             .catch(err => this.setState({errMsg: "Could not find quiz"}))
     }
+
+    handleAnswerChange = (e, questionKey) => {
+        const { id, checked } = e.target;
+        this.setState(state => {
+            let newUserAnswers = { ...state.userAnswers };
+            // Add answer if check, remove if unchecked
+            checked ? 
+                (newUserAnswers[questionKey] = newUserAnswers[questionKey].concat(id)) : 
+                (newUserAnswers[questionKey] = newUserAnswers[questionKey].filter(answerKey => answerKey !== id));
+        
+            return { userAnswers: newUserAnswers };
+        });
+    };
     
     handleSubmit = e => {
         e.preventDefault()
@@ -91,7 +103,7 @@ class Quiz extends Component {
                 }, 0)
 
                 // set question score to 0 if below and assign it to overall score
-                if(questionScore < 0)  questionScore = 0 
+                if(questionScore < 0) questionScore = 0 
                 finalScore += questionScore
             })
 

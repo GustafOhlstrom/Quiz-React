@@ -76,7 +76,7 @@ function CreateQuestion(props) {
                 />
             </div>
             <small className="form-text text-white ml-auto mb-2">
-              Select correct answer(s) with checkbox
+                Select correct answer(s) with checkbox
             </small>
 
             {/* Ansewers */}

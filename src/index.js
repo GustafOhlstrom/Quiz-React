@@ -5,8 +5,8 @@ import "./assets/styles/main.scss";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 ReactDOM.render(
-  <div>
-    <App />
-  </div>,
-  document.getElementById("root")
+	<div>
+		<App />
+	</div>,
+	document.getElementById("root")
 );

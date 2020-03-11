@@ -1,12 +1,12 @@
-import "./createQuiz.scss";
-import React, { Component } from "react";
-import CreateQuestion from "./CreateQuestion";
-import { db } from "../../config/fbConfig";
-import cardImage from "../../assets/images/questions.jpg";
+import "./createQuiz.scss"
+import React, { Component } from "react"
+import CreateQuestion from "./CreateQuestion"
+import { db } from "../../config/fbConfig"
+import cardImage from "../../assets/images/questions.jpg"
 
 function getId() {
-	const uniqid = require("uniqid");
-	return uniqid();
+	const uniqid = require("uniqid")
+	return uniqid()
 }
 
 class CreateQuiz extends Component {
@@ -14,24 +14,24 @@ class CreateQuiz extends Component {
 		title: "",
 		questions: {},
 		errMsg: "",
-	};
+	}
 
-	handleTitleChange = e => this.setState({ title: e.target.value });
+	handleTitleChange = e => this.setState({ title: e.target.value })
 
 	// Question handlers
 
 	handleQuestionChange = (e, questionKey) => {
-		const value = e.target.value;
+		const value = e.target.value
 		this.setState(state => {
-			let questions = { ...state.questions };
-			questions[questionKey].question = value;
-			return { questions: questions };
-		});
-	};
+			let questions = { ...state.questions }
+			questions[questionKey].question = value
+			return { questions: questions }
+		})
+	}
 
 	handleNewQuestionClick = () => {
 		this.setState(state => {
-			let questions = { ...state.questions };
+			let questions = { ...state.questions }
 
 			// Create new empty question with unique ids
 			questions["Q" + getId()] = {
@@ -42,112 +42,112 @@ class CreateQuiz extends Component {
 				},
 				correctAnswers: {},
 				pointsPerAnswer: 1
-			};
-			return { questions: questions };
-		});
-	};
+			}
+			return { questions: questions }
+		})
+	}
 
 	handleRemoveQuestionClick = questionKey => {
 		this.setState(state => {
-			let questions = { ...state.questions };
-			delete questions[questionKey];
-			return { questions: questions };
-		});
-	};
+			let questions = { ...state.questions }
+			delete questions[questionKey]
+			return { questions: questions }
+		})
+	}
 
 	handlePointsChange = (e, questionKey) => {
-		const value = e.target.value;
+		const value = e.target.value
 		if(typeof Number(value) === 'number' && value <= 999) {
 			this.setState(state => {
-				let questions = { ...state.questions };
-				questions[questionKey].pointsPerAnswer = Number(value);
-				return { questions: questions };
-			});
+				let questions = { ...state.questions }
+				questions[questionKey].pointsPerAnswer = Number(value)
+				return { questions: questions }
+			})
 		}
-	};
+	}
 
 	// Answers handlers
 
 	handleAnswerChange = (e, answerChecked, answerKey, questionKey) => {
 		// Name stores answer index
-		const { value } = e.target;
+		const { value } = e.target
 		this.setState(state => {
-			let questions = { ...state.questions };
+			let questions = { ...state.questions }
 			// Update correct answer if checked as one
-			if (answerChecked) questions[questionKey].correctAnswers[answerKey] = value;
+			if (answerChecked) questions[questionKey].correctAnswers[answerKey] = value
 				// Update answer value
-				questions[questionKey].answers[answerKey] = value;
-				return { questions: questions };
-		});
-	};
+				questions[questionKey].answers[answerKey] = value
+				return { questions: questions }
+		})
+	}
 
 	handleNewAnswerClick = questionKey => {
 		this.setState(state => {
-			let questions = { ...state.questions };
-			questions[questionKey].answers["A" + getId()] = "";
-			return { questions: questions };
-		});
-	};
+			let questions = { ...state.questions }
+			questions[questionKey].answers["A" + getId()] = ""
+			return { questions: questions }
+		})
+	}
 
 	handleCorrectAnswerChange = (e, answer, answerKey, questionKey) => {
-		const { checked } = e.target;
+		const { checked } = e.target
 		this.setState(state => {
-			let questions = { ...state.questions };
+			let questions = { ...state.questions }
 			// Add or remove answer from correctAnswers
 			checked ? 
 				(questions[questionKey].correctAnswers[answerKey] = answer) : 
-				delete questions[questionKey].correctAnswers[answerKey];
+				delete questions[questionKey].correctAnswers[answerKey]
 
-			return { questions: questions };
-		});
-	};
+			return { questions: questions }
+		})
+	}
 
 	handleRemoveAnswerClick = (answerKey, questionKey) => {
 		// Check if more than two answers exists
 		if (Object.keys(this.state.questions[questionKey].answers).length > 2) {
 			this.setState(state => {
-				let questions = { ...state.questions };
+				let questions = { ...state.questions }
 				// remove answer and remove answer from correctAnser
-				delete questions[questionKey].answers[answerKey];
-				delete questions[questionKey].correctAnswers[answerKey];
+				delete questions[questionKey].answers[answerKey]
+				delete questions[questionKey].correctAnswers[answerKey]
 
-				return { questions: questions };
-			});
+				return { questions: questions }
+			})
 		} else {
-			alert("Each question need to contain more than two answers");
+			alert("Each question need to contain more than two answers")
 		}
-	};
+	}
 
 	// Create the quiz
 
 	handleSubmit = e => {
-		e.preventDefault();
-		const { title, questions } = this.state;
+		e.preventDefault()
+		const { title, questions } = this.state
 
 		// Check if title is empty
-		if (title) {
-			let submit = true;
+		if(title) {
+			let submit = true
 			Object.keys(questions).forEach(questionKey => {
 				// Check if questions are empty
 				if (questions[questionKey].question) {
 					// Check if answers are empty
 					Object.keys(questions[questionKey].answers).forEach(answerKey => {
 						if (!questions[questionKey].answers[answerKey]) {
-							submit = false;
-							this.setState({errMsg: "Quiz answers can't be empty when submitting a quiz"});
+							submit = false
+							this.setState({errMsg: "Quiz answers can't be empty when submitting a quiz"})
 						}
-					});
+					})
 
 					// Check if atleast one correctAnswer is selected
 					if (Object.keys(questions[questionKey].correctAnswers).length < 1) {
-						submit = false;
-						this.setState({errMsg: "A correct answer needs to be selected for each question before submitting a quiz"});
+						submit = false
+						this.setState({errMsg: "A correct answer needs to be selected for each question before submitting a quiz"})
 					}
 				} else {
-					submit = false;
-					this.setState({errMsg: "Quiz questions cannot be empty when submitting a quiz"});
+					submit = false
+					this.setState({errMsg: "Quiz questions cannot be empty when submitting a quiz"})
 				}
-			});
+			})
 
 			// Submit quiz
 			if (submit) {
@@ -157,21 +157,23 @@ class CreateQuiz extends Component {
 					questions: this.state.questions
 				})
 				.then(doc => {
-					this.props.history.push("/" + doc.id);
+					this.props.history.push("/" + doc.id)
 				})
-				.catch(err => alert("Error adding quiz: ", err));
+				.catch(err => alert("Error adding quiz: ", err))
 			}
 		} else {
-			this.setState({errMsg: "Quiz needs a title to be submitted"});
+			this.setState({errMsg: "Quiz needs a title to be submitted"})
 		}
-	};
+	}
 
 	render() {
-		const { title, questions, errMsg } = this.state;
+		const { title, questions, errMsg } = this.state
 		return (
 			!this.props.user ?  
-				(<div className="container alert alert-secondary mt-5 text-center" role="alert">
-					You need to be logged in to create a quiz
+				(<div className="container">
+					<div className="alert alert-secondary mt-5 text-center" role="alert">
+						You need to be logged in to create a quiz
+					</div>
 				</div>) : 
 				(<div id="createQuiz">
 					<div className="quiz-title mx-auto my-5 container">
@@ -225,7 +227,7 @@ class CreateQuiz extends Component {
 									onCorrectAnswerChange={(e, answer, answersKey) => this.handleCorrectAnswerChange(e, answer, answersKey,questionKey)}
 									onRemoveAnswerClick={answerIndex => this.handleRemoveAnswerClick(answerIndex, questionKey)}
 								/>
-							);
+							)
 						})}
 
 						{/* New Question Button */}
@@ -253,8 +255,8 @@ class CreateQuiz extends Component {
 						</div>
 					</form>
 				</div>)
-		);
+		)
 	}
 }
 
-export default CreateQuiz;
+export default CreateQuiz

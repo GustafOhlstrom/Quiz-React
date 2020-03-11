@@ -20,14 +20,8 @@ class SignUp extends React.Component {
 		const { email, password } = this.state;
 
 		auth.createUserWithEmailAndPassword(email, password)
-			.then(credentials => {
-				this.props.history.push("/");
-			})
-			.catch(err => {
-				this.setState({
-					err: err.message
-				});
-			});
+			.then(credentials => this.props.history.push("/"))
+			.catch(err => this.setState({err: err.message}))
 	};
 
 	render() {
@@ -79,7 +73,7 @@ class SignUp extends React.Component {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	}
 }
 
